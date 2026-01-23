@@ -26,8 +26,6 @@ function LoginForm() {
     const [userLoginType, setUserLogInType] = useState<string>('email');
     const [selectedCountry, setSelectedCountry] = useState<Key | null>('AU');
 
-
-
     // use filter
     const { contains } = useFilter({ sensitivity: 'base' });
 
@@ -68,8 +66,7 @@ function LoginForm() {
             </div>
 
             {userLoginType === 'email' && (
-                <TextField fullWidth name="email">
-                    <Label>Email address</Label>
+                <TextField fullWidth name="email" aria-label="user email" aria-labelledby="user email">
                     <InputGroup fullWidth>
                         <InputGroup.Prefix>
                             <Avatar size="sm">

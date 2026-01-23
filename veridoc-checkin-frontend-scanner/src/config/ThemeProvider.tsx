@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 export default function AppThemeProvider({ children }: { children: ReactNode }) {
     return (
-        <ThemeProvider attribute="class" defaultTheme="system">
+        <ThemeProvider attribute="class" setAttribute={true} defaultTheme="light">
             {children}
         </ThemeProvider>
     )

@@ -1,11 +1,36 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent: oklch(0.5996 0.1499 150.26);
+  --border: oklch(0.8671 0.0106 247.95);
+  -muted: oklch(0.5517 0.0138 285.94);
+
+  --ring-offset-width: 1px;
+  --tw-ring-offset-width: 1px;
+  --field-background: var(--white);
+  --field-foreground: oklch(0.2103 0.0059 285.89);
+  --field-placeholder: var(--muted);
+  /* --foreground: #ffffff; */
 }
 
+@layer components {
+  .button {
+    @apply rounded-sm bg-accent h-[50px] w-full
+  }
+
+  .input-group {
+    @apply bg-field text-field-foreground inline-flex min-h-9 items-center overflow-hidden border-1 text-sm border-[#ced4da] px-3 py-2 outline-none rounded-sm;
+    
+  }
+
+  .input-group__input {
+    @apply flex-1 rounded-none border-0 bg-transparent px-3 py-2 shadow-none outline-none text-base font-normal;
+  }
+}
+
+
+/*
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -24,4 +49,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
