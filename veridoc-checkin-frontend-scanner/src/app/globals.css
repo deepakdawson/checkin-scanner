@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @import "tailwindcss";
 @import "@heroui/styles";
+@import "../components/styles/utilities/appUtilities.css";
+@import "../components/styles/utilities/inputUtil.css";
+@import "../components/styles/utilities/autoCompleteUtil.css";
+@import "../components/styles/utilities/textareaUtil.css";
+
 
 :root {
   --accent: oklch(0.5996 0.1499 150.26);
@@ -12,22 +18,59 @@
   --field-foreground: oklch(0.2103 0.0059 285.89);
   --field-placeholder: var(--muted);
   /* --foreground: #ffffff; */
+
+  --heroui-font-family-sans: 'Roboto', sans-serif;
+  
+
+  /* custom variable */
+  --input-container-height: 50px;
+  --input-prefix-image-width: 25px;
+  --input-prefix-image-height: 25px;
+  --button-height: 50px;
 }
 
 @layer components {
   .button {
-    @apply rounded-sm bg-accent h-[50px] w-full
+    @apply rounded-sm bg-accent h-[var(--button-height)] w-full text-base;
   }
 
   .input-group {
-    @apply bg-field text-field-foreground inline-flex min-h-9 items-center overflow-hidden border-1 text-sm border-[#ced4da] px-3 py-2 outline-none rounded-sm;
-    
+    @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 text-sm border-[var(--border)] px-3 py-2 outline-none rounded-sm;
   }
 
   .input-group__input {
-    @apply flex-1 rounded-none border-0 bg-transparent px-3 py-2 shadow-none outline-none text-base font-normal;
+    @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base font-normal;
+  }
+
+  .input-group[data-focus-within="true"] {
+    @apply border-1 border-[var(--accent)];
+    box-shadow: none;
+  }
+
+  .input-group__prefix {
+    @apply w-[var(--input-prefix-image-width)] h-[var(--input-prefix-image-height)] object-contain relative
+  }
+
+  .input-group:has([data-slot="input-group-prefix"]) .input-group__input{
+    @apply pl-[8px]!;
+  }
+
+  .avatar__image{
+    @apply  object-contain relative 
+  }
+  .avatar--sm{
+    @apply bg-transparent
   }
 }
+
+@theme {
+  --font-family-sans: 'Roboto', sans-serif;
+  /* --shadow-md: rgba(100,100,111,0.2) 0px 7px 29px 0px; customize the default shadow-md utility */
+}
+body{
+  font-family: 'Roboto', sans-serif
+}
+
 
 
 /*

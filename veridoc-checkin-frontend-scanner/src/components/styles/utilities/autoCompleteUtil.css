@@ -1,0 +1,29 @@
+@layer components {
+  .autocomplete {
+    @apply flex flex-col gap-1;
+  }
+
+  .autocomplete__trigger {
+    @apply rounded-sm border-1 border-[var(--border)] bg-surface p-2 h-[var(--input-container-height)];
+  }
+
+  .autocomplete__value {
+    @apply text-base font-normal flex;
+  }
+
+  .autocomplete__clear-button {
+    @apply text-muted hover:text-foreground;
+  }
+
+  .autocomplete__indicator {
+    @apply text-muted;
+  }
+
+  .autocomplete__popover {
+    @apply rounded-sm border-1 border-[var(--border)] bg-surface p-2;
+  }
+
+  .autocomplete__filter {
+    @apply rounded-sm border-1 border-[var(--border)]
+  }
+}
