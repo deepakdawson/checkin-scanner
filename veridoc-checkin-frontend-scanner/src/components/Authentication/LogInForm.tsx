@@ -1,8 +1,9 @@
 'use client'
 import { countries } from "@/src/models/data/countries";
 import type { Key } from "@heroui/react";
-import { Autocomplete, Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, ListBox, Modal, SearchField, TextField, useFilter } from "@heroui/react";
+import { Autocomplete, Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, ListBox, Modal, SearchField, TextField, useFilter } from "@heroui/react";
 import { useState } from "react";
+import { MdOutlineVerified } from "react-icons/md";
 
 
 function LoginForm() {
@@ -142,25 +143,59 @@ function LoginForm() {
             <Modal isOpen={showOtpModal} onOpenChange={setShowOtpModal}>
                 <Modal.Backdrop>
                     <Modal.Container>
-                        <Modal.Dialog className="sm:max-w-[360px]">
+                        <Modal.Dialog className="lg:max-w-[400px]">
                             <Modal.CloseTrigger />
-                            <Modal.Header>
-                                <Modal.Icon className="bg-default text-foreground">
-                                    close
-                                </Modal.Icon>
-                                <Modal.Heading>Welcome to HeroUI</Modal.Heading>
+                            <Modal.Header>                                
+                                <Modal.Heading>Verification</Modal.Heading>
                             </Modal.Header>
                             <Modal.Body>
-                                <p>
-                                    A beautiful, fast, and modern React UI library for building accessible and
-                                    customizable web applications with ease.
+                                <p className="text-center text-[14px] text-gray-600 mb-1">We have sent you an OTP code via SMS for mobile number verification to:</p>
+                                <p className="text-center text-[#24984d] text-base font-semibold mb-3">+917980653787</p>
+                                <p className="text-center text-[14px] text-gray-500 mb-4">
+                                    Time Remaining: <b className="font-bold">97 seconds</b>
                                 </p>
+                                <p className="text-center font-medium mb-3">Enter OTP</p>
+
+                                <div className="flex justify-center mb-3">
+                                    <InputOTP
+                                        aria-describedby='otp_input'
+                                        maxLength={6}
+                                        name="otpCode"
+                                    >
+                                        <InputOTP.Group>
+                                            <InputOTP.Slot index={0} />
+                                            <InputOTP.Slot index={1} />
+                                            <InputOTP.Slot index={2} />
+                                        </InputOTP.Group>
+                                        <InputOTP.Separator />
+                                        <InputOTP.Group>
+                                            <InputOTP.Slot index={3} />
+                                            <InputOTP.Slot index={4} />
+                                            <InputOTP.Slot index={5} />
+                                        </InputOTP.Group>
+                                    </InputOTP>
+                                </div>
+
+                                <Button fullWidth>
+                                    Confirm
+                                </Button>
+                                <div className="flex justify-center text-sm">
+                                    <button className="text-blue-600 mb-2">
+                                        Try a different number
+                                    </button>
+                                </div>
+                                <div className="text-center text-sm">
+                                    <button className="text-[#24984d] font-medium">
+                                        Resend OTP
+                                    </button>
+                                </div>
+
                             </Modal.Body>
-                            <Modal.Footer>
+                            {/* <Modal.Footer>
                                 <Button className="w-full" slot="close">
                                     Continue
                                 </Button>
-                            </Modal.Footer>
+                            </Modal.Footer> */}
                         </Modal.Dialog>
                     </Modal.Container>
                 </Modal.Backdrop>

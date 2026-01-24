@@ -20,7 +20,7 @@
   /* --foreground: #ffffff; */
 
   --heroui-font-family-sans: 'Roboto', sans-serif;
-  
+
 
   /* custom variable */
   --input-container-height: 50px;
@@ -51,15 +51,20 @@
     @apply w-[var(--input-prefix-image-width)] h-[var(--input-prefix-image-height)] object-contain relative
   }
 
-  .input-group:has([data-slot="input-group-prefix"]) .input-group__input{
+  .input-group:has([data-slot="input-group-prefix"]) .input-group__input {
     @apply pl-[8px]!;
   }
 
-  .avatar__image{
-    @apply  object-contain relative 
+  .avatar__image {
+    @apply object-contain relative
   }
-  .avatar--sm{
+
+  .avatar--sm {
     @apply bg-transparent
+  }
+
+  .modal__header {
+    @apply text-center
   }
 }
 
@@ -67,7 +72,8 @@
   --font-family-sans: 'Roboto', sans-serif;
   /* --shadow-md: rgba(100,100,111,0.2) 0px 7px 29px 0px; customize the default shadow-md utility */
 }
-body{
+
+body {
   font-family: 'Roboto', sans-serif
 }
 
