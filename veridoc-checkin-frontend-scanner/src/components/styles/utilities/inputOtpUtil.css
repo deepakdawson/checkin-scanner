@@ -1,0 +1,18 @@
+@layer components {
+  .input-otp {
+    @apply gap-3;
+  }
+
+  .input-otp__slot {
+    @apply size-12 rounded-sm border-1 border-[var(--border)] font-bold;
+  }
+
+  .input-otp__slot[data-active="true"] {
+    @apply border-[var(--accent)] ring-1;
+    /* box-shadow: none; */
+  }
+
+  .input-otp__separator {
+    @apply w-2 h-1 rounded-full;
+  }
+}

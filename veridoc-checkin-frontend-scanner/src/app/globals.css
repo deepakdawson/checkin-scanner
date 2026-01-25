@@ -5,6 +5,7 @@
 @import "../components/styles/utilities/inputUtil.css";
 @import "../components/styles/utilities/autoCompleteUtil.css";
 @import "../components/styles/utilities/textareaUtil.css";
+@import "../components/styles/utilities/inputOtpUtil.css";
 
 
 :root {

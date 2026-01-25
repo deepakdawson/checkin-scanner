@@ -3,7 +3,7 @@ import { countries } from "@/src/models/data/countries";
 import type { Key } from "@heroui/react";
 import { Autocomplete, Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, ListBox, Modal, SearchField, TextField, useFilter } from "@heroui/react";
 import { useState } from "react";
-import { MdOutlineVerified } from "react-icons/md";
+
 
 
 function LoginForm() {
@@ -143,10 +143,10 @@ function LoginForm() {
             <Modal isOpen={showOtpModal} onOpenChange={setShowOtpModal}>
                 <Modal.Backdrop>
                     <Modal.Container>
-                        <Modal.Dialog className="lg:max-w-[400px]">
+                        <Modal.Dialog className="lg:max-w-[460px]">
                             <Modal.CloseTrigger />
                             <Modal.Header>                                
-                                <Modal.Heading>Verification</Modal.Heading>
+                                <Modal.Heading className="text-2xl text-[var(--accent)] mb-2">Verification</Modal.Heading>
                             </Modal.Header>
                             <Modal.Body>
                                 <p className="text-center text-[14px] text-gray-600 mb-1">We have sent you an OTP code via SMS for mobile number verification to:</p>
@@ -156,7 +156,7 @@ function LoginForm() {
                                 </p>
                                 <p className="text-center font-medium mb-3">Enter OTP</p>
 
-                                <div className="flex justify-center mb-3">
+                                <div className="flex justify-center mb-4">
                                     <InputOTP
                                         aria-describedby='otp_input'
                                         maxLength={6}
@@ -166,9 +166,6 @@ function LoginForm() {
                                             <InputOTP.Slot index={0} />
                                             <InputOTP.Slot index={1} />
                                             <InputOTP.Slot index={2} />
-                                        </InputOTP.Group>
-                                        <InputOTP.Separator />
-                                        <InputOTP.Group>
                                             <InputOTP.Slot index={3} />
                                             <InputOTP.Slot index={4} />
                                             <InputOTP.Slot index={5} />
@@ -176,18 +173,20 @@ function LoginForm() {
                                     </InputOTP>
                                 </div>
 
-                                <Button fullWidth>
-                                    Confirm
-                                </Button>
-                                <div className="flex justify-center text-sm">
-                                    <button className="text-blue-600 mb-2">
+                                <div className="flex justify-center mb-3">
+                                    <Button className={'w-40'}>
+                                        Confirm
+                                    </Button>
+                                </div>
+                                <div className="flex justify-center text-sm mb-2">
+                                    <Button variant="ghost" className="bg-transparent hover:bg-transparent text-blue-600 text-sm h-auto">
                                         Try a different number
-                                    </button>
+                                    </Button>
                                 </div>
                                 <div className="text-center text-sm">
-                                    <button className="text-[#24984d] font-medium">
+                                    <Button className="text-[var(--accent)] font-medium bg-transparent hover:bg-transparent h-auto">
                                         Resend OTP
-                                    </button>
+                                    </Button>
                                 </div>
 
                             </Modal.Body>
