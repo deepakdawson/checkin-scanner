@@ -1,23 +1,44 @@
 'use client'
-import { Autocomplete, Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, ListBox, SearchField, TextArea, TextField, useFilter } from "@heroui/react";
-import { countries } from "@/src/models/data/countries";
-import type { Key } from "@heroui/react";
-import { useState } from "react";
+import { countries, CustomOption } from "@/src/models/data/countries";
+import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, TextArea, TextField } from "@heroui/react";
+import { useMemo, useState } from "react";
+import Select from "react-select";
 
 
 function GuestAccountForm() {
 
-    const [selectedCountry, setSelectedCountry] = useState<Key | null>('AU');
+    // counties option
+        const options = useMemo(() => {
+            return countries.map((country) => ({
+                ...country,
+                label: (
+                    <div className="flex items-center gap-2">
+                        <Avatar size="sm">
+                            <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
+                            <AvatarFallback>{country.code}</AvatarFallback>
+                        </Avatar>
+                        {`${country.name} (${country.dial_code})`}
+                    </div>
+                ),
+                value: country.dial_code,
+            }));
+        }, []);
 
-    // use filter
-    const { contains } = useFilter({ sensitivity: 'base' });
+    const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x =>x.code === 'AU'));
+    const [isPhoneFocused, setIsPhoneFocused] = useState(false);
+    const [phoneSubmitError, setPhoneSubmitError] = useState(false);
 
     // page handlers
     const handleCountryChange = (event: any) => {
         console.log(event);
         setSelectedCountry(event);
     };
-
+    const customFilter = (option: CustomOption, searchText: string) => {
+            return (
+                option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                option.data.dial_code.toLowerCase().includes(searchText.toLowerCase())
+            );
+        };
 
     return <>
         <Form>
@@ -39,71 +60,45 @@ function GuestAccountForm() {
 
             {/* country list */}
             <div className="mb-[10px]">
-                <Autocomplete
-                isRequired
-                    placeholder="Select Country"
-                    selectionMode="single"
-                    value={selectedCountry}
-                    onChange={handleCountryChange}
-                    aria-label="Country"
-                    aria-labelledby="Country"
-                    name="countryISO"
-                >
-                    <Label className="font-bold text-base">Country</Label>
-                    <Autocomplete.Trigger>
-                        <Autocomplete.Value>
-                            {({ defaultChildren, isPlaceholder, state }) => {
-                                if (isPlaceholder || state.selectedItems.length === 0) {
-                                    return defaultChildren;
-                                }
-                                const selectedItems = state.selectedItems;
-                                if (selectedItems.length > 1) {
-                                    return `${selectedItems.length} users selected`;
-                                }
-                                const selectedItem = countries.find((country) => country.code === selectedItems[0]?.key);
-                                if (!selectedItem) {
-                                    return defaultChildren;
-                                }
-                                return (
-                                    <div className="flex items-center gap-2">
-                                        <Avatar size="sm">
-                                            <AvatarImage src={`https://flagcdn.com/${selectedItem.code.toLowerCase()}.svg`} />
-                                            <AvatarFallback>{selectedItem.code}</AvatarFallback>
-                                        </Avatar>
-                                        <span>{selectedItem.name} ({selectedItem.dial_code})</span>
-                                    </div>
-                                );
-                            }}
-                        </Autocomplete.Value>
-                        {/* <Autocomplete.ClearButton /> */}
-                        <Autocomplete.Indicator />
-                    </Autocomplete.Trigger>
-                    <Autocomplete.Popover>
-                        <Autocomplete.Filter filter={contains}>
-                            <SearchField autoFocus name="search">
-                                <SearchField.Group>
-                                    <SearchField.SearchIcon />
-                                    <SearchField.Input placeholder="Search countires..." />
-                                    <SearchField.ClearButton />
-                                </SearchField.Group>
-                            </SearchField>
-                            <ListBox aria-label="country">
-                                {countries.map((country) => (
-                                    <ListBox.Item key={country.code} id={country.code} textValue={country.name} aria-label="country">
-                                        <Avatar size="sm">
-                                            <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
-                                            <AvatarFallback>{country.code}</AvatarFallback>
-                                        </Avatar>
-                                        <div className="flex flex-col">
-                                            <span>{country.name} ({country.dial_code})</span>
-                                        </div>
-                                        <ListBox.ItemIndicator />
-                                    </ListBox.Item>
-                                ))}
-                            </ListBox>
-                        </Autocomplete.Filter>
-                    </Autocomplete.Popover>
-                </Autocomplete>
+                <Select
+                        instanceId={"country_code_login"}
+                        isSearchable
+                        value={selectedCountry}
+                        options={options}
+                        filterOption={customFilter}
+                        placeholder="Select country"
+                        onChange={handleCountryChange}
+                        onFocus={() => setIsPhoneFocused(true)}
+                        onBlur={() => setIsPhoneFocused(false)}
+                        styles={{
+                            control: (provided) => ({
+                                ...provided,
+                                height: "50px",
+                                borderRadius: "5px",
+                                boxShadow: "none",
+                                borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
+                                borderColor: phoneSubmitError
+                                    ? "red"
+                                    : isPhoneFocused
+                                        ? "#24984e"
+                                        : "#ced4da",
+                                backgroundColor: "white", // always white background
+                            }),
+                            valueContainer: (provided) => ({ ...provided, height: "50px" }),
+                            indicatorsContainer: (provided) => ({ ...provided, height: "50px" }),
+                            placeholder: (provided) => ({
+                                ...provided,
+                                color: "#B3B3B3",
+                            }),
+                            option: (provided, state) => ({
+                                ...provided,
+                                backgroundColor:
+                                    state.isFocused || state.isSelected ? "#24984e" : "white",
+                                color: state.isFocused || state.isSelected ? "white" : "black",
+                                cursor: "pointer",
+                            }),
+                        }}
+                    />
             </div>
                                 
             {/* phone number input*/}

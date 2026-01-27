@@ -5,6 +5,7 @@
 
   .input-otp__slot {
     @apply size-12 rounded-sm border-1 border-[var(--border)] font-bold;
+    box-shadow: none;
   }
 
   .input-otp__slot[data-active="true"] {
