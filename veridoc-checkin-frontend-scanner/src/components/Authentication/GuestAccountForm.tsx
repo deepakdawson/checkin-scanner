@@ -8,23 +8,23 @@ import Select from "react-select";
 function GuestAccountForm() {
 
     // counties option
-        const options = useMemo(() => {
-            return countries.map((country) => ({
-                ...country,
-                label: (
-                    <div className="flex items-center gap-2">
-                        <Avatar size="sm">
-                            <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
-                            <AvatarFallback>{country.code}</AvatarFallback>
-                        </Avatar>
-                        {`${country.name} (${country.dial_code})`}
-                    </div>
-                ),
-                value: country.dial_code,
-            }));
-        }, []);
+    const options = useMemo(() => {
+        return countries.map((country) => ({
+            ...country,
+            label: (
+                <div className="flex items-center gap-2">
+                    <Avatar size="sm">
+                        <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
+                        <AvatarFallback>{country.code}</AvatarFallback>
+                    </Avatar>
+                    {`${country.name} (${country.dial_code})`}
+                </div>
+            ),
+            value: country.dial_code,
+        }));
+    }, []);
 
-    const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x =>x.code === 'AU'));
+    const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x => x.code === 'AU'));
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
 
@@ -34,11 +34,11 @@ function GuestAccountForm() {
         setSelectedCountry(event);
     };
     const customFilter = (option: CustomOption, searchText: string) => {
-            return (
-                option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                option.data.dial_code.toLowerCase().includes(searchText.toLowerCase())
-            );
-        };
+        return (
+            option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            option.data.dial_code.toLowerCase().includes(searchText.toLowerCase())
+        );
+    };
 
     return <>
         <Form>
@@ -46,70 +46,76 @@ function GuestAccountForm() {
             <div className="mb-[10px]">
                 <TextField isRequired fullWidth name="fullName">
                     <Label className="font-bold text-base">Full Name</Label>
-                    <Input placeholder="Full Name" type="text" />
+                    <div className="mt-[10px]">
+                        <Input placeholder="Full Name" type="text" />
+                    </div>
                 </TextField>
             </div>
 
             {/* FULL NAME INPUT */}
-            <div className="mb-[10px]">
+            <div className="mb-[20px]">
                 <TextField isRequired fullWidth name="email">
                     <Label className="font-bold text-base">Email</Label>
-                    <Input placeholder="Email" type="email" />
+                    <div className="mt-[10px]">
+                        <Input placeholder="Email" type="email" />
+                    </div>
                 </TextField>
             </div>
 
             {/* country list */}
             <div className="mb-[10px]">
                 <Select
-                        instanceId={"country_code_login"}
-                        isSearchable
-                        value={selectedCountry}
-                        options={options}
-                        filterOption={customFilter}
-                        placeholder="Select country"
-                        onChange={handleCountryChange}
-                        onFocus={() => setIsPhoneFocused(true)}
-                        onBlur={() => setIsPhoneFocused(false)}
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                height: "50px",
-                                borderRadius: "5px",
-                                boxShadow: "none",
-                                borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
-                                borderColor: phoneSubmitError
-                                    ? "red"
-                                    : isPhoneFocused
-                                        ? "#24984e"
-                                        : "#ced4da",
-                                backgroundColor: "white", // always white background
-                            }),
-                            valueContainer: (provided) => ({ ...provided, height: "50px" }),
-                            indicatorsContainer: (provided) => ({ ...provided, height: "50px" }),
-                            placeholder: (provided) => ({
-                                ...provided,
-                                color: "#B3B3B3",
-                            }),
-                            option: (provided, state) => ({
-                                ...provided,
-                                backgroundColor:
-                                    state.isFocused || state.isSelected ? "#24984e" : "white",
-                                color: state.isFocused || state.isSelected ? "white" : "black",
-                                cursor: "pointer",
-                            }),
-                        }}
-                    />
+                    instanceId={"country_code_login"}
+                    isSearchable
+                    value={selectedCountry}
+                    options={options}
+                    filterOption={customFilter}
+                    placeholder="Select country"
+                    onChange={handleCountryChange}
+                    onFocus={() => setIsPhoneFocused(true)}
+                    onBlur={() => setIsPhoneFocused(false)}
+                    styles={{
+                        control: (provided) => ({
+                            ...provided,
+                            height: "50px",
+                            borderRadius: "5px",
+                            boxShadow: "none",
+                            borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
+                            borderColor: phoneSubmitError
+                                ? "red"
+                                : isPhoneFocused
+                                    ? "#24984e"
+                                    : "#ced4da",
+                            backgroundColor: "white", // always white background
+                        }),
+                        valueContainer: (provided) => ({ ...provided, height: "50px" }),
+                        indicatorsContainer: (provided) => ({ ...provided, height: "50px" }),
+                        placeholder: (provided) => ({
+                            ...provided,
+                            color: "#B3B3B3",
+                        }),
+                        option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor:
+                                state.isFocused || state.isSelected ? "#24984e" : "white",
+                            color: state.isFocused || state.isSelected ? "white" : "black",
+                            cursor: "pointer",
+                        }),
+                    }}
+                />
             </div>
-                                
+
             {/* phone number input*/}
             <div className="mb-[20px]">
                 <TextField isRequired fullWidth name="phoneNumber">
                     <Label className="font-bold text-base">Phone Number</Label>
-                    <Input placeholder="Phone Number" type="text" />
+                    <div className="mt-[10px]">
+                        <Input placeholder="Phone Number" type="text" />
+                    </div>
                     <Description>Please enter the phone number without plus sign (+) and country code.</Description>
                 </TextField>
             </div>
-            
+
             {/* address input*/}
             <div className="mb-[20px] flex flex-col gap-2">
                 <Label htmlFor="useraddress" className="font-bold text-base">Address</Label>
@@ -119,8 +125,8 @@ function GuestAccountForm() {
                     aria-label="Detailed notes"
                     placeholder="Address"
                     rows={3}
-                    style={{resize: "vertical"}}
-                    />
+                    style={{ resize: "vertical" }}
+                />
             </div>
 
             <Button
