@@ -1,11 +1,14 @@
 'use client'
 import { countries, CustomOption } from "@/src/models/data/countries";
 import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, TextArea, TextField } from "@heroui/react";
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import Select from "react-select";
+import AuthService from "@/src/services/authService";
+import guestAccountCreateSchema from "@/src/validation/GuestAccountCreateSchema";
+import { AppAlert } from "../common/AppAlert";
 
 
-function GuestAccountForm() {
+function GuestAccountForm({ token }: { token: string }) {
 
     // counties option
     const options = useMemo(() => {
@@ -33,6 +36,7 @@ function GuestAccountForm() {
         console.log(event);
         setSelectedCountry(event);
     };
+
     const customFilter = (option: CustomOption, searchText: string) => {
         return (
             option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -40,12 +44,26 @@ function GuestAccountForm() {
         );
     };
 
+    const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        
+    }
+
+    const handleFormSubmitOnInvlaid = (event: FormEvent<HTMLFormElement>) => {
+        console.log(event)
+    }
+
     return <>
-        <Form>
+        <Form onSubmit={handleFormSubmit} onInvalid={handleFormSubmitOnInvlaid}>
             {/* FULL NAME INPUT */}
             <div className="mb-[10px]">
-                <TextField isRequired fullWidth name="fullName">
-                    <Label className="font-bold text-base">Full Name</Label>
+                <TextField isRequired fullWidth name="firsName">
+                    <Label className="font-bold text-base">First Name</Label>
+                    <div className="mt-[10px]">
+                        <Input placeholder="Full Name" type="text" />
+                    </div>
+                </TextField>
+                <TextField fullWidth name="lastName">
+                    <Label className="font-bold text-base">Last Name</Label>
                     <div className="mt-[10px]">
                         <Input placeholder="Full Name" type="text" />
                     </div>
@@ -65,6 +83,7 @@ function GuestAccountForm() {
             {/* country list */}
             <div className="mb-[10px]">
                 <Select
+                    name="phoneCodeISO"
                     instanceId={"country_code_login"}
                     isSearchable
                     value={selectedCountry}

@@ -1,7 +1,15 @@
 import ErrorAnimation from "@/src/components/animations/ErrorAnimation"
 import GuestAccountForm from "@/src/components/Authentication/GuestAccountForm"
 import Image from "next/image"
-export default function createGuestAccountPage() {
+import { redirect } from "next/navigation";
+
+export default async function createGuestAccountPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+
+    const token = (await searchParams).token;
+    if(!token){
+        redirect('/');
+    }
+
     return <>
         <main className="">
             <div>
@@ -22,7 +30,7 @@ export default function createGuestAccountPage() {
                                         Enter details to Log Event
                                     </h1>
                                 </div>
-                                <GuestAccountForm />
+                                <GuestAccountForm token={token}/>
                             </div>
                         </div>
                     </div>

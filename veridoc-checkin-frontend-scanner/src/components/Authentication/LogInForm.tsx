@@ -1,10 +1,10 @@
 'use client'
 import { countries, CustomOption } from "@/src/models/data/countries";
-import type { Key } from "@heroui/react";
-import { Autocomplete, Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, ListBox, Modal, SearchField, TextField, useFilter } from "@heroui/react";
+import { Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, Modal, TextField, useFilter } from "@heroui/react";
 import { useMemo, useState } from "react";
 import Select from "react-select";
-
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 function LoginForm() {
@@ -26,14 +26,16 @@ function LoginForm() {
         }));
     }, []);
 
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+
     const [userLoginType, setUserLogInType] = useState<string>('email');
     const [selectedCountry, setSelectedCountry] = useState<any>(null);
     const [showOtpModal, setShowOtpModal] = useState<boolean>(false);
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
 
-    // use filter
-    const { contains } = useFilter({ sensitivity: 'base' });
 
     // page handlers
     const handleCountryChange = (event: any) => {
@@ -46,12 +48,15 @@ function LoginForm() {
             option.data.dial_code.toLowerCase().includes(searchText.toLowerCase())
         );
     };
-
+    const onClickContinueAsGuest = () => {
+        const token = searchParams.get('token') ?? '';
+        router.push(`/guest?token=${token}`);
+    }
 
     return <>
         {/* user login form */}
         <Form className="w-full flex flex-col gap-6 mb-2 relative">
-            <Button type="button" variant="primary" fullWidth>Continue as a Guest</Button>
+            <Button type="button" fullWidth onClick={onClickContinueAsGuest}>Continue as a Guest</Button>
             <hr className="border-t border-gray-300" />
             <div className="flex items-center justify-between relative z-20">
                 <h1 className="text-[28px] mt-6 font-semibold">Returning here?</h1>
