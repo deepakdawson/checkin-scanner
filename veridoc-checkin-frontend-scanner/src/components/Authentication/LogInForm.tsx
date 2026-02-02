@@ -64,7 +64,7 @@ function LoginForm() {
                     <div
                         onClick={() => setUserLogInType("email")}
                         className={`px-4 py-1 text-[14px] cursor-pointer z-40 ${userLoginType === "email"
-                            ? "bg-[#24984d] text-white"
+                            ? "bg-[#24984e] text-white"
                             : "bg-white text-black"
                             }`}
                     >
@@ -73,7 +73,7 @@ function LoginForm() {
                     <div
                         onClick={() => setUserLogInType("phone")}
                         className={`px-4 py-1 text-[14px] cursor-pointer z-40 ${userLoginType === "phone"
-                            ? "bg-[#24984d] text-white"
+                            ? "bg-[#24984e] text-white"
                             : "bg-white text-black"
                             }`}>
                         Phone
