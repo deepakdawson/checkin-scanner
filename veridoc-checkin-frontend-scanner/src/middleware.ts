@@ -25,6 +25,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/setting/:path*' // match all nested dashboard routes
+        //'/setting/:path*' // match all nested dashboard routes
     ]
 }

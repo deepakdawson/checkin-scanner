@@ -1,7 +1,6 @@
 import Image from "next/image";
 import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
 import { Metadata } from "next";
-import Scandetailsform from "@/src/components/myprofile/Myprofileform";
 
 export const metadata: Metadata = {
   title: "My Profile",
@@ -31,7 +30,7 @@ export default function MyProfilePage() {
                 </h1>
 
                 {/* FORM COMPONENT */}
-                <Scandetailsform />
+                
               </div>
             </div>
           </div>
