@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react"
 import { AppAlert } from "../AppAlert"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import AppMessages from "@/src/config/AppMessages"
 
 interface Props {
     isOpen: boolean,
@@ -23,8 +24,8 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
     const [isVerifyButtonLoading, setIsVerifyButtonLoading] = useState<boolean>(false);
     const [otpValue, setOtpValue] = useState<string>('');
     const [timeRemaining, setTimeRemaining] = useState<number>(100);
-    
-    const intervalRef = useRef<number|undefined>(undefined);
+
+    const intervalRef = useRef<number | undefined>(undefined);
 
     const router = useRouter();
 
@@ -37,7 +38,7 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
                 setResendButtonDisabled(false);
             }
         }, 1000);
-       
+
         return () => {
             clearInterval(intervalRef.current);
         }
@@ -93,13 +94,22 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
         setLoaderVisibility('hidden');
         if (response) {
             signIn('credentials', {
-                username: '',
+                username: params.email,
                 phoneCodeISO: params.phoneIsoCode,
                 phoneNumber: params.phoneNumber,
                 otp: otpValue,
                 redirect: false
             }).then(res => {
                 setIsOpen(false);
+                if(res?.status === 401){
+                    AppAlert.errorToast(AppMessages.Error.unauthorized);
+                } else if(res?.status === 500){
+                    AppAlert.errorToast(AppMessages.Error.serverError);
+                } 
+                if(res?.ok){
+                    router.push('setting/profile');
+                }
+                
             }).catch(err => {
                 setIsVerifyButtonLoading(false);
                 setVerifyButtonDisabled(true);
@@ -109,9 +119,9 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
         }
     }
 
-    
+
     return <>
-        <Modal isOpen={isOpen} onOpenChange={() => {setIsOpen(false); window.clearInterval(intervalRef.current)}}>
+        <Modal isOpen={isOpen} onOpenChange={() => { setIsOpen(false); window.clearInterval(intervalRef.current) }}>
             <Modal.Backdrop>
                 <Modal.Container>
                     <Modal.Dialog className="lg:max-w-[460px]">
@@ -120,8 +130,23 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
                             <Modal.Heading className="text-2xl text-[var(--accent)] mb-2">Verification</Modal.Heading>
                         </Modal.Header>
                         <Modal.Body>
-                            <p className="text-center text-[14px] text-gray-600 mb-1">We have sent you an OTP code via SMS for mobile number verification to:</p>
-                            <p className="text-center text-[var(--accent)] text-base font-semibold mb-3">{params.phoneCode} {params.phoneNumber}</p>
+                            <p className="text-center text-[14px] text-gray-600 mb-1">
+                                {
+                                    params.isEmailLogin === true ?
+                                        'We have sent you an OTP code via email:'
+                                        : params.isEmailLogin === false ?
+                                            'We have sent you an OTP code via SMS:'
+                                            : 'We have sent you an OTP code via SMS for mobile number verification to:'
+                                }
+                            </p>
+                            <p className="text-center text-[var(--accent)] text-base font-semibold mb-3">
+                                {
+                                    params.isEmailLogin === true ?
+                                        params.email
+                                        : params.phoneCode + params.phoneNumber
+                                }
+
+                            </p>
                             <p className="text-center text-[14px] text-gray-500 mb-4">
                                 Time Remaining: <b className="font-bold">{timeRemaining} seconds</b>
                             </p>

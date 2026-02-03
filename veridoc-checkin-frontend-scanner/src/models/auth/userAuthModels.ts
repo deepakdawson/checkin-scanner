@@ -17,7 +17,9 @@ type OtpModalInputProps = {
     visitorId: string,
     phoneNumber: string,
     phoneIsoCode: string,
-    phoneCode: string
+    phoneCode: string,
+    email?: string,
+    isEmailLogin?: boolean,
 }
 
 type OtpResendRequestModel = {
@@ -29,10 +31,18 @@ type UserLoginResponse = {
     refreshToken: string
 }
 
+type OtpGenerateRequestModel = {
+    email: string,
+    phoneCodeISO: string,
+    phoneNumber: string,
+    isEmailLogin: boolean
+}
+
 export type {
     userCreateModel,
     OtpVerifyRequestModel,
     OtpModalInputProps,
     OtpResendRequestModel,
-    UserLoginResponse
+    UserLoginResponse,
+    OtpGenerateRequestModel
 }

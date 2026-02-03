@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppThemeProvider from "../config/ThemeProvider";
+import { Toast } from "@heroui/react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light" data-theme="light">
       <body>
+        <Toast.Container />
         {children}
       </body>
     </html>

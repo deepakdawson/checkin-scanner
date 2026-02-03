@@ -1,6 +1,6 @@
 import type { GuestAccountCreateResponse } from "@/src/models/response/AuthServerResponses";
 import AppMessages from "../config/AppMessages";
-import type { userCreateModel, OtpResendRequestModel, OtpVerifyRequestModel } from "../models/auth/userAuthModels";
+import type { userCreateModel, OtpResendRequestModel, OtpVerifyRequestModel, OtpGenerateRequestModel } from "../models/auth/userAuthModels";
 import { ServerCommonResponse } from "../models/response/ServerResponse";
 
 export default class AuthService {
@@ -48,6 +48,27 @@ export default class AuthService {
         });
         if (response.ok) {
             return await response.json();
+        }
+        const errorResponse = await response.json();
+        const serverResponse = errorResponse as ServerCommonResponse;
+
+        console.log(errorResponse);
+
+        if('code' in serverResponse) {
+            return Promise.reject(new Error(serverResponse.message));
+        }
+
+        console.log(errorResponse);
+        return Promise.reject(new Error(AppMessages.Error.serverError));
+    }
+
+    async generateOtpForUserAccount(data: OtpGenerateRequestModel): Promise<GuestAccountCreateResponse> {
+        const response = await fetch('/api/guest/otp', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            return (await response.json()).data as GuestAccountCreateResponse;
         }
         const errorResponse = await response.json();
         const serverResponse = errorResponse as ServerCommonResponse;

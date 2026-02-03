@@ -4,16 +4,15 @@ import { useEffect, useState } from "react";
 interface LoaderProps {
     loadingText?: string;
     loaderVisible: string;
-    loaderNumberCount: number
 }
 
-const Loader: React.FC<LoaderProps> = ({ loadingText = "Loading", loaderVisible = "hidden", loaderNumberCount = 0 }) => {
+const Loader: React.FC<LoaderProps> = ({ loadingText = "Loading", loaderVisible = "hidden"}) => {
     const customStyles = {
         boxShadow: "0 0 0 1000px rgba(255, 255, 255, 0.25)",
         height: "100%",
         width: "100%",
     };
-    const [count, setCount] = useState(100);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {

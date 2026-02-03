@@ -1,14 +1,14 @@
 'use client'
+import type { OtpModalInputProps } from "@/src/models/auth/userAuthModels";
 import { userCreateModel } from "@/src/models/auth/userAuthModels";
 import { countries, CustomOption } from "@/src/models/data/countries";
 import AuthService from "@/src/services/authService";
-import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, InputOTP, Label, Modal, TextArea, TextField } from "@heroui/react";
+import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, TextArea, TextField } from "@heroui/react";
 import { FormEvent, useMemo, useState } from "react";
 import Select from "react-select";
 import { AppAlert } from "../common/AppAlert";
 import Loader from "../common/Loader";
 import InputOtpModal from "../common/auth/InputOtpModal";
-import type { OtpModalInputProps } from "@/src/models/auth/userAuthModels";
 
 
 function GuestAccountForm({ token }: { token: string }) {
@@ -77,7 +77,9 @@ function GuestAccountForm({ token }: { token: string }) {
                 phoneNumber: body.phoneNumber,
                 phoneCode: selectedCountry.dial_code,
                 visitorId: response.visitorId,
-                phoneIsoCode: body.phoneCodeISO
+                phoneIsoCode: body.phoneCodeISO,
+                email: undefined,
+                isEmailLogin: undefined
             }
             setInputOtpModalParam(otpInput);
             setShowOtpModal(true);
@@ -95,7 +97,7 @@ function GuestAccountForm({ token }: { token: string }) {
     }
 
     return <>
-        <Loader loaderVisible={loaderVisibility} loaderNumberCount={loaderCount} />
+        <Loader loaderVisible={loaderVisibility} />
         <Form onSubmit={handleFormSubmit} onInvalid={handleFormSubmitOnInvlaid}>
             {/* FULL NAME INPUT */}
             <div className="mb-[10px]">

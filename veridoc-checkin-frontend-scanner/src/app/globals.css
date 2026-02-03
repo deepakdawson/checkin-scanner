@@ -27,6 +27,7 @@
   --input-prefix-image-width: 25px;
   --input-prefix-image-height: 25px;
   --button-height: 50px;
+  --input-border-radius: 5px;
 }
 
 @layer components {

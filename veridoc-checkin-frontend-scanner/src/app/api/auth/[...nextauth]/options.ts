@@ -19,16 +19,15 @@ const authOptions: NextAuthOptions = {
                     PhoneNumber: credentials.phoneNumber,
                     otp: credentials.otp
                 });
-
                 if (response.status === 200) {
                     const user = response.data as UserInfo;
                     return user;
                 }
 
                 if (response.status === 401) {
-                    return Promise.reject(new Error(AppMessages.Error.unauthorized));
+                    throw new Error(AppMessages.Error.unauthorized);
                 }
-                return Promise.reject(new Error(AppMessages.Error.serverError));
+                throw new Error(AppMessages.Error.serverError);
             }
         })
     ],

@@ -1,14 +1,20 @@
 'use client'
 import { countries, CustomOption } from "@/src/models/data/countries";
 import { Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, Modal, TextField, useFilter } from "@heroui/react";
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import Select from "react-select";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-
+import AuthService from "@/src/services/authService";
+import Loader from "../common/Loader";
+import { AppAlert } from "../common/AppAlert";
+import AppMessages from "@/src/config/AppMessages";
+import type { OtpGenerateRequestModel, OtpModalInputProps } from "@/src/models/auth/userAuthModels";
+import InputOtpModal from "../common/auth/InputOtpModal";
 
 function LoginForm() {
 
+    const regex = /^\d*$/;
     // counties option
     const options = useMemo(() => {
         return countries.map((country) => ({
@@ -31,10 +37,13 @@ function LoginForm() {
 
 
     const [userLoginType, setUserLogInType] = useState<string>('email');
-    const [selectedCountry, setSelectedCountry] = useState<any>(null);
+    const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x => x.code === 'AU'));
     const [showOtpModal, setShowOtpModal] = useState<boolean>(false);
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
+    const [showLoader, setShowLoader] = useState<string>('hidden');
+    const [inputOtpModalParam, setInputOtpModalParam] = useState<OtpModalInputProps>({} as OtpModalInputProps);
+
 
     // form values
     const [userEmail, setUserEmail] = useState<string>('');
@@ -55,9 +64,75 @@ function LoginForm() {
         const token = searchParams.get('token') ?? '';
         router.push(`/guest?token=${token}`);
     }
+    const handlePhoneNumberChange = (value: string) => {
+         if (regex.test(value)) {
+            setUserPhoneNumber(value);
+        }
+    }
 
-    const handleContinueButtonClick = async () => {
+    const onSubmitError = () =>{
+        AppAlert.error(AppMessages.Validation.email);
+    }
 
+    const handleContinueButtonClick = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (userLoginType === 'email') {
+            if (userEmail.length > 0) {
+                const requestBody: OtpGenerateRequestModel = {
+                    email: userEmail,
+                    phoneCodeISO: '',
+                    phoneNumber: '',
+                    isEmailLogin: true
+                }
+                setShowLoader('block');
+                const service = new AuthService();
+                const response = await service.generateOtpForUserAccount(requestBody).catch(err => {
+                    setShowLoader('hidden');
+                    AppAlert.error(err.message);
+                });
+                setShowLoader('hidden');
+                if (response) {
+                    const otpInput: OtpModalInputProps = {
+                        phoneNumber: userPhoneNumber,
+                        phoneCode: selectedCountry?.dial_code ??'',
+                        visitorId: response.visitorId,
+                        phoneIsoCode: selectedCountry?.code ?? '',
+                        email: userEmail,
+                        isEmailLogin: userLoginType === 'email'
+                    }
+                    setInputOtpModalParam(otpInput);
+                    setShowOtpModal(true);
+                }
+            }
+        } else if(userLoginType === 'phone'){
+            if (userEmail.length > 0) {
+                const requestBody: OtpGenerateRequestModel = {
+                    email: '',
+                    phoneCodeISO: selectedCountry.code,
+                    phoneNumber: userPhoneNumber,
+                    isEmailLogin: false
+                }
+                setShowLoader('block');
+                const service = new AuthService();
+                const response = await service.generateOtpForUserAccount(requestBody).catch(err => {
+                    setShowLoader('hidden');
+                    AppAlert.error(err.message);
+                });
+                setShowLoader('hidden');
+                if (response) {
+                    const otpInput: OtpModalInputProps = {
+                        phoneNumber: userPhoneNumber,
+                        phoneCode: selectedCountry?.dial_code ??'',
+                        visitorId: response.visitorId,
+                        phoneIsoCode: selectedCountry?.code ?? '',
+                        email: userEmail,
+                        isEmailLogin: false
+                    }
+                    setInputOtpModalParam(otpInput);
+                    setShowOtpModal(true);
+                }
+            }
+        }
     }
 
 
@@ -65,7 +140,8 @@ function LoginForm() {
 
     return <>
         {/* user login form */}
-        <Form className="w-full flex flex-col gap-6 mb-2 relative">
+        <Loader loaderVisible={showLoader} loadingText="Loading" />
+        <Form className="w-full flex flex-col gap-6 mb-2 relative" onSubmit={handleContinueButtonClick} onInvalid={onSubmitError}>
             <Button type="button" fullWidth onClick={onClickContinueAsGuest}>Continue as a Guest</Button>
             <hr className="border-t border-gray-300" />
             <div className="flex items-center justify-between relative z-20">
@@ -92,7 +168,7 @@ function LoginForm() {
             </div>
 
             {userLoginType === 'email' && (
-                <TextField fullWidth name="email" aria-label="user email" aria-labelledby="user email" value={userEmail} onChange={setUserEmail}>
+                <TextField fullWidth isRequired name="email" aria-label="user email" aria-labelledby="user email" value={userEmail} onChange={setUserEmail}>
                     <InputGroup fullWidth>
                         <InputGroup.Prefix>
                             <Avatar size="sm">
@@ -146,78 +222,17 @@ function LoginForm() {
                         }}
                     />
 
-                    <TextField aria-label="phone number" aria-labelledby="phone number">
+                    <TextField aria-label="phone number" aria-labelledby="phone number" name="phoneNumber" value={userPhoneNumber} onChange={setUserPhoneNumber}>
                         <Input type="text" placeholder="Phone Number" />
                     </TextField>
 
                 </div>
             )}
 
-            <Button type="button" variant="primary" fullWidth onClick={handleContinueButtonClick}>Continue</Button>
+            <Button type="submit" variant="primary" fullWidth>Continue</Button>
         </Form>
 
-        {showOtpModal && (
-            <Modal isOpen={showOtpModal} onOpenChange={setShowOtpModal}>
-                <Modal.Backdrop>
-                    <Modal.Container>
-                        <Modal.Dialog className="lg:max-w-[460px]">
-                            <Modal.CloseTrigger />
-                            <Modal.Header>
-                                <Modal.Heading className="text-2xl text-[var(--accent)] mb-2">Verification</Modal.Heading>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <p className="text-center text-[14px] text-gray-600 mb-1">We have sent you an OTP code via SMS for mobile number verification to:</p>
-                                <p className="text-center text-[#24984d] text-base font-semibold mb-3">+917980653787</p>
-                                <p className="text-center text-[14px] text-gray-500 mb-4">
-                                    Time Remaining: <b className="font-bold">97 seconds</b>
-                                </p>
-                                <p className="text-center font-medium mb-3">Enter OTP</p>
-
-                                <div className="flex justify-center mb-4">
-                                    <InputOTP
-                                        aria-describedby='otp_input'
-                                        maxLength={6}
-                                        name="otpCode"
-                                    >
-                                        <InputOTP.Group>
-                                            <InputOTP.Slot index={0} />
-                                            <InputOTP.Slot index={1} />
-                                            <InputOTP.Slot index={2} />
-                                            <InputOTP.Slot index={3} />
-                                            <InputOTP.Slot index={4} />
-                                            <InputOTP.Slot index={5} />
-                                        </InputOTP.Group>
-                                    </InputOTP>
-                                </div>
-
-                                <div className="flex justify-center mb-3">
-                                    <Button className={'w-40'}>
-                                        Confirm
-                                    </Button>
-                                </div>
-                                <div className="flex justify-center text-sm mb-2">
-                                    <Button variant="ghost" className="bg-transparent hover:bg-transparent text-blue-600 text-sm h-auto">
-                                        Try a different number
-                                    </Button>
-                                </div>
-                                <div className="text-center text-sm">
-                                    <Button className="text-[var(--accent)] font-medium bg-transparent hover:bg-transparent h-auto">
-                                        Resend OTP
-                                    </Button>
-                                </div>
-
-                            </Modal.Body>
-                            {/* <Modal.Footer>
-                                <Button className="w-full" slot="close">
-                                    Continue
-                                </Button>
-                            </Modal.Footer> */}
-                        </Modal.Dialog>
-                    </Modal.Container>
-                </Modal.Backdrop>
-            </Modal>
-        )}
-
+        <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setShowLoader} />
     </>
 }
 
