@@ -110,7 +110,7 @@ export default function AddProfileForm() {
                     rows={4}
                     className="w-full border rounded-lg p-3 outline-none focus:border-[#24984e]"
                   />
-                )}
+                )}  
 
               </div>
             </div>
@@ -123,11 +123,11 @@ export default function AddProfileForm() {
       {/* Buttons */}
       <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
 
-        <Button className="bg-[#24984e] text-white w-full sm:w-auto min-w-[120px]">
+        <Button className="bg-[#24984e] text-white w-full max-w-[200px]">
           Save
         </Button>
 
-        <Button className="bg-[#24984e] text-white w-full sm:w-auto min-w-[120px]">
+        <Button className="bg-[#24984e] text-white w-full max-w-[200px]">
           Cancel
         </Button>
 
