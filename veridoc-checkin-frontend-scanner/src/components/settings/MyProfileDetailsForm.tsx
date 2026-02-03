@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 
-export default function MyProfilePage() {
+export default function MyProfileDetailsForm() {
     const [isEditing, setIsEditing] = useState(true); // Start in editing mode
     const [profileData, setProfileData] = useState({
         fullName: "",

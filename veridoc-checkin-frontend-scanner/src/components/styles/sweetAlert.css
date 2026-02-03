@@ -1,0 +1,22 @@
+.swal2-confirm {
+    border-radius: var(--swal2-confirm-button-border-radius);
+    background: initial;
+    background-color: var(--accent);
+    box-shadow: var(--swal2-confirm-button-box-shadow);
+    color: var(--swal2-confirm-button-color);
+    font-size: 1em;
+    width: 150px;
+}
+.swal2-cancel {
+    font-size: 1em;
+    width: 150px;
+    height: 50px;
+}
+.swal2-deny {
+    font-size: 1em;
+    width: 150px;
+    height: 50px;
+}
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):hover {
+    background-color:  color-mix(in oklab, lab(55.4298% -45.5844 29.8698) 90%, lab(98.9676% -.0000596046 0) 10%)!important;
+}

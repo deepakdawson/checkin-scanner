@@ -2,7 +2,7 @@ import { ServerCommonResponse } from "@/src/models/response/ServerResponse";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
-
+import https from 'https';
 
 class HttpClient {
 
@@ -12,8 +12,11 @@ class HttpClient {
             baseURL: process.env.API_URL,
             headers: {
                 'Content-Type': 'application/json',
-                token
+                //token
             },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
         });
         this.client.interceptors.response.use(response => response, (error: AxiosError<ServerCommonResponse>) => {
             if (error.status === 401) {

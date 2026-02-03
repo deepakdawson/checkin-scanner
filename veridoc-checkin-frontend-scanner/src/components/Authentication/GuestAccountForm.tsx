@@ -1,15 +1,19 @@
 'use client'
+import { userCreateModel } from "@/src/models/auth/userAuthModels";
 import { countries, CustomOption } from "@/src/models/data/countries";
-import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, TextArea, TextField } from "@heroui/react";
+import AuthService from "@/src/services/authService";
+import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, InputOTP, Label, Modal, TextArea, TextField } from "@heroui/react";
 import { FormEvent, useMemo, useState } from "react";
 import Select from "react-select";
-import AuthService from "@/src/services/authService";
-import guestAccountCreateSchema from "@/src/validation/GuestAccountCreateSchema";
 import { AppAlert } from "../common/AppAlert";
+import Loader from "../common/Loader";
+import InputOtpModal from "../common/auth/InputOtpModal";
+import type { OtpModalInputProps } from "@/src/models/auth/userAuthModels";
 
 
 function GuestAccountForm({ token }: { token: string }) {
 
+    const regex = /^\d*$/;
     // counties option
     const options = useMemo(() => {
         return countries.map((country) => ({
@@ -30,6 +34,11 @@ function GuestAccountForm({ token }: { token: string }) {
     const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x => x.code === 'AU'));
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
+    const [showOtpModal, setShowOtpModal] = useState<boolean>(false);
+    const [loaderVisibility, setLoaderVisibility] = useState<string>('hidden');
+    const [loaderCount, setLoaderCount] = useState<number>(0);
+    const [inputOtpModalParam, setInputOtpModalParam] = useState<OtpModalInputProps>({} as OtpModalInputProps);
 
     // page handlers
     const handleCountryChange = (event: any) => {
@@ -45,18 +54,52 @@ function GuestAccountForm({ token }: { token: string }) {
     };
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         
+        const fd = new FormData(event.currentTarget);
+        const data = Object.fromEntries(fd.entries());
+        data.phoneCodeISO = selectedCountry.code;
+
+        const body = data as userCreateModel;
+        body.token = token
+
+        setLoaderVisibility('block');
+        setLoaderCount(0);
+
+        const service = new AuthService();
+        const response = await service.createUserAccount(body).catch(error => {
+            setLoaderVisibility('hidden');
+            AppAlert.error(error.message);
+        });
+        setLoaderVisibility('hidden');
+        if (response) {
+            const otpInput: OtpModalInputProps = {
+                phoneNumber: body.phoneNumber,
+                phoneCode: selectedCountry.dial_code,
+                visitorId: response.visitorId,
+                phoneIsoCode: body.phoneCodeISO
+            }
+            setInputOtpModalParam(otpInput);
+            setShowOtpModal(true);
+        }
     }
 
     const handleFormSubmitOnInvlaid = (event: FormEvent<HTMLFormElement>) => {
-        console.log(event)
+        AppAlert.error('Please enter all required fileds');
+    }
+
+    const phoneNumberChangeEvent = (event: string) => {
+        if (regex.test(event)) {
+            setPhoneNumber(event);
+        }
     }
 
     return <>
+        <Loader loaderVisible={loaderVisibility} loaderNumberCount={loaderCount} />
         <Form onSubmit={handleFormSubmit} onInvalid={handleFormSubmitOnInvlaid}>
             {/* FULL NAME INPUT */}
             <div className="mb-[10px]">
-                <TextField isRequired fullWidth name="firsName">
+                <TextField isRequired fullWidth name="firstName">
                     <Label className="font-bold text-base">First Name</Label>
                     <div className="mt-[10px]">
                         <Input placeholder="Full Name" type="text" />
@@ -126,7 +169,7 @@ function GuestAccountForm({ token }: { token: string }) {
 
             {/* phone number input*/}
             <div className="mb-[20px]">
-                <TextField isRequired fullWidth name="phoneNumber">
+                <TextField isRequired fullWidth name="phoneNumber" value={phoneNumber} onChange={phoneNumberChangeEvent} maxLength={15}>
                     <Label className="font-bold text-base">Phone Number</Label>
                     <div className="mt-[10px]">
                         <Input placeholder="Phone Number" type="text" />
@@ -152,9 +195,12 @@ function GuestAccountForm({ token }: { token: string }) {
                 type="submit"
                 fullWidth
             >
-                Submit and Create my profile
+                Submit and create my profile
             </Button>
         </Form>
+
+        {/* otp modal */}
+       <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setLoaderVisibility}/>
 
     </>
 }

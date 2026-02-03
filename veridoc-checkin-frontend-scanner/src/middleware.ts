@@ -14,17 +14,17 @@ export async function middleware(request: NextRequest) {
     });
     const url = request.nextUrl;
 
-    if (!token && (url.pathname !== '/login')) {
-        return NextResponse.redirect(new URL('/login', request.url))
+    if (!token && (url.pathname !== '/')) {
+        return NextResponse.redirect(new URL('/', request.url))
     }
 
-    if (token && (url.pathname == '/' || url.pathname == '/login')) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (token && (url.pathname == '/' || url.pathname == '/')) {
+        return NextResponse.redirect(new URL('/setting', request.url))
     }
 }
 
 export const config = {
     matcher: [
-        '/dashboard/:path*' // match all nested dashboard routes
+        '/setting/:path*' // match all nested dashboard routes
     ]
 }

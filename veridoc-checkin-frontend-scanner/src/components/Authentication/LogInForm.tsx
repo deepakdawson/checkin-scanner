@@ -36,6 +36,9 @@ function LoginForm() {
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
 
+    // form values
+    const [userEmail, setUserEmail] = useState<string>('');
+    const [userPhoneNumber, setUserPhoneNumber] = useState<string>('');
 
     // page handlers
     const handleCountryChange = (event: any) => {
@@ -53,6 +56,13 @@ function LoginForm() {
         router.push(`/guest?token=${token}`);
     }
 
+    const handleContinueButtonClick = async () => {
+
+    }
+
+
+
+
     return <>
         {/* user login form */}
         <Form className="w-full flex flex-col gap-6 mb-2 relative">
@@ -64,7 +74,7 @@ function LoginForm() {
                     <div
                         onClick={() => setUserLogInType("email")}
                         className={`px-4 py-1 text-[14px] cursor-pointer z-40 ${userLoginType === "email"
-                            ? "bg-[#24984e] text-white"
+                            ? "bg-[var(--accent)] text-white"
                             : "bg-white text-black"
                             }`}
                     >
@@ -73,7 +83,7 @@ function LoginForm() {
                     <div
                         onClick={() => setUserLogInType("phone")}
                         className={`px-4 py-1 text-[14px] cursor-pointer z-40 ${userLoginType === "phone"
-                            ? "bg-[#24984e] text-white"
+                            ? "bg-[var(--accent)] text-white"
                             : "bg-white text-black"
                             }`}>
                         Phone
@@ -82,7 +92,7 @@ function LoginForm() {
             </div>
 
             {userLoginType === 'email' && (
-                <TextField fullWidth name="email" aria-label="user email" aria-labelledby="user email">
+                <TextField fullWidth name="email" aria-label="user email" aria-labelledby="user email" value={userEmail} onChange={setUserEmail}>
                     <InputGroup fullWidth>
                         <InputGroup.Prefix>
                             <Avatar size="sm">
@@ -109,27 +119,27 @@ function LoginForm() {
                         styles={{
                             control: (provided) => ({
                                 ...provided,
-                                height: "50px",
-                                borderRadius: "5px",
+                                height: "var(--input-container-height)",
+                                borderRadius: "var(--input-border-radius)",
                                 boxShadow: "none",
                                 borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
                                 borderColor: phoneSubmitError
                                     ? "red"
                                     : isPhoneFocused
-                                        ? "#24984e"
-                                        : "#ced4da",
+                                        ? "var(--accent)"
+                                        : "var(--border)",
                                 backgroundColor: "white", // always white background
                             }),
-                            valueContainer: (provided) => ({ ...provided, height: "50px" }),
-                            indicatorsContainer: (provided) => ({ ...provided, height: "50px" }),
+                            valueContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
+                            indicatorsContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
                             placeholder: (provided) => ({
                                 ...provided,
-                                color: "#B3B3B3",
+                                color: "var(--field-placeholder)",
                             }),
                             option: (provided, state) => ({
                                 ...provided,
                                 backgroundColor:
-                                    state.isFocused || state.isSelected ? "#24984e" : "white",
+                                    state.isFocused || state.isSelected ? "var(--accent)" : "white",
                                 color: state.isFocused || state.isSelected ? "white" : "black",
                                 cursor: "pointer",
                             }),
@@ -143,7 +153,7 @@ function LoginForm() {
                 </div>
             )}
 
-            <Button type="button" variant="primary" fullWidth onClick={() => { setShowOtpModal(true) }}>Continue as a Guest</Button>
+            <Button type="button" variant="primary" fullWidth onClick={handleContinueButtonClick}>Continue</Button>
         </Form>
 
         {showOtpModal && (

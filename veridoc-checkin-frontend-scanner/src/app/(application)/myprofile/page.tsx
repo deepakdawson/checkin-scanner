@@ -1,7 +1,5 @@
 import Image from "next/image";
 import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
-
-
 import { Metadata } from "next";
 import Scandetailsform from "@/src/components/myprofile/Myprofileform";
 
@@ -14,14 +12,10 @@ export default function MyProfilePage() {
     <main>
       <div>
         <ErrorAnimation />
-
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center min-h-screen">
-
             <div className="login-div p-[40px] w-[600px] rounded-[20px] bg-white z-0 shadow-login">
-
               <div>
-
                 {/* Logo */}
                 <Image
                   src="/logo_h_Black.webp"
@@ -38,14 +32,10 @@ export default function MyProfilePage() {
 
                 {/* FORM COMPONENT */}
                 <Scandetailsform />
-
               </div>
-
             </div>
-
           </div>
         </div>
-
       </div>
     </main>
   );

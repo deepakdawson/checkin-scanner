@@ -6,12 +6,12 @@
 @import "../components/styles/utilities/autoCompleteUtil.css";
 @import "../components/styles/utilities/textareaUtil.css";
 @import "../components/styles/utilities/inputOtpUtil.css";
-
+@import "../components/styles/sweetAlert.css";
 
 :root {
   --accent: oklch(0.5996 0.1499 150.26);
   --border: oklch(0.8671 0.0106 247.95);
-  -muted: oklch(0.5517 0.0138 285.94);
+  --muted: oklch(0.5517 0.0138 285.94);
 
   --ring-offset-width: 1px;
   --tw-ring-offset-width: 1px;
@@ -21,8 +21,7 @@
   /* --foreground: #ffffff; */
 
   --heroui-font-family-sans: 'Roboto', sans-serif;
-
-
+  
   /* custom variable */
   --input-container-height: 50px;
   --input-prefix-image-width: 25px;

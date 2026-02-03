@@ -1,5 +1,8 @@
 import type { NextAuthOptions } from "next-auth";
-import CredentialsProvider  from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
+import httpClient from "@/src/config/http/httpClient";
+import { UserInfo } from "@/src/models/auth/UserModel";
+import AppMessages from "@/src/config/AppMessages";
 
 const authOptions: NextAuthOptions = {
     providers: [
@@ -10,20 +13,43 @@ const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             async authorize(credentials: any): Promise<any> {
-                const url: string = process.env.API_URL + '/api/account/login';
+                const response = await httpClient.post('/auth/guest/login', {
+                    email: credentials.username,
+                    PhoneCodeISO: credentials.phoneCodeISO,
+                    PhoneNumber: credentials.phoneNumber,
+                    otp: credentials.otp
+                });
+
+                if (response.status === 200) {
+                    const user = response.data as UserInfo;
+                    return user;
+                }
+
+                if (response.status === 401) {
+                    return Promise.reject(new Error(AppMessages.Error.unauthorized));
+                }
+                return Promise.reject(new Error(AppMessages.Error.serverError));
             }
         })
-    ], 
+    ],
     callbacks: {
-        async session({session, user, token}) {
-            return session;
+        async session({ session, user, token }) {
+            if (token) {
+                session.user = token.user
+            }
+
+            return session
         },
-        async jwt({token, user}) {
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = user
+            }
+
             return token
         }
     },
     pages: {
-        signIn: '/login'
+        signIn: '/'
     },
     session: {
         strategy: 'jwt',
