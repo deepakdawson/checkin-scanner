@@ -32,9 +32,9 @@ export default function MyProfileDetails() {
                 />
 
                 {/* Title */}
-                <h1 className="text-[24px] text-center font-semibold mt-6 mb-5 text-green-600">
+                {/* <h1 className="text-[24px] text-center font-semibold mt-6 mb-5 text-green-600">
                   My Profile
-                </h1>
+                </h1> */}
 
                 {/* FORM COMPONENT */}
                 <ProfilehistoryForm />
