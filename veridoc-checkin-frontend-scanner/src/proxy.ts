@@ -14,8 +14,6 @@ export async function proxy(request: NextRequest) {
     });
     const url = request.nextUrl;
 
-    console.log('mid', token);
-
     if (!token && (url.pathname !== '/')) {
         return NextResponse.redirect(new URL('/', request.url))
     }

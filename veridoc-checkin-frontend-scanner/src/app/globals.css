@@ -28,17 +28,32 @@
   --input-prefix-image-height: 25px;
   --button-height: 50px;
   --input-border-radius: 5px;
+  --icon-button-icon-width: 25px;
+  --icon-button-icon-height: 25px;
 }
 
 @layer components {
   .button {
-    @apply rounded-sm bg-accent h-[var(--button-height)] w-full text-base;
+    @apply rounded-sm bg-accent h-[var(--button-height)] text-base;
   }
-
+  .button--icon-only {
+    @apply bg-transparent h-auto w-auto rounded-sm
+  }
+  .button--icon-only:hover {
+    @apply bg-[var(--color-default-hover)]
+  }
+  .button--icon-only svg {
+    @apply w-[var(--icon-button-icon-width)]! h-[var(--icon-button-icon-height)]!
+  }
+  .button--danger{
+    @apply bg-[var(--color-danger)]
+  }
   .input-group {
     @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 text-sm border-[var(--border)] px-3 py-2 outline-none rounded-sm;
   }
-
+  .label{
+    @apply font-bold text-base
+  }
   .input-group__input {
     @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base font-normal;
   }

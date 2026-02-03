@@ -140,31 +140,31 @@ function GuestAccountForm({ token }: { token: string }) {
                     onBlur={() => setIsPhoneFocused(false)}
                     styles={{
                         control: (provided) => ({
-                            ...provided,
-                            height: "50px",
-                            borderRadius: "5px",
-                            boxShadow: "none",
-                            borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
-                            borderColor: phoneSubmitError
-                                ? "red"
-                                : isPhoneFocused
-                                    ? "#24984e"
-                                    : "#ced4da",
-                            backgroundColor: "white", // always white background
-                        }),
-                        valueContainer: (provided) => ({ ...provided, height: "50px" }),
-                        indicatorsContainer: (provided) => ({ ...provided, height: "50px" }),
-                        placeholder: (provided) => ({
-                            ...provided,
-                            color: "#B3B3B3",
-                        }),
-                        option: (provided, state) => ({
-                            ...provided,
-                            backgroundColor:
-                                state.isFocused || state.isSelected ? "#24984e" : "white",
-                            color: state.isFocused || state.isSelected ? "white" : "black",
-                            cursor: "pointer",
-                        }),
+                                ...provided,
+                                height: "var(--input-container-height)",
+                                borderRadius: "var(--input-border-radius)",
+                                boxShadow: "none",
+                                borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
+                                borderColor: phoneSubmitError
+                                    ? "red"
+                                    : isPhoneFocused
+                                        ? "var(--accent)"
+                                        : "var(--border)",
+                                backgroundColor: "white", // always white background
+                            }),
+                            valueContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
+                            indicatorsContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
+                            placeholder: (provided) => ({
+                                ...provided,
+                                color: "var(--field-placeholder)",
+                            }),
+                            option: (provided, state) => ({
+                                ...provided,
+                                backgroundColor:
+                                    state.isFocused || state.isSelected ? "var(--accent)" : "white",
+                                color: state.isFocused || state.isSelected ? "white" : "black",
+                                cursor: "pointer",
+                            }),
                     }}
                 />
             </div>
@@ -186,7 +186,7 @@ function GuestAccountForm({ token }: { token: string }) {
                 <TextArea
                     id="useraddress"
                     name="address"
-                    aria-label="Detailed notes"
+                    aria-label="Address"
                     placeholder="Address"
                     rows={3}
                     style={{ resize: "vertical" }}

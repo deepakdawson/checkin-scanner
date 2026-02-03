@@ -1,126 +1,74 @@
 "use client";
+import { countries, CustomOption } from "@/src/models/data/countries";
+import { useEffect, useMemo, useState } from "react";
+import { VscChevronRight } from "react-icons/vsc";
+import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, Separator, TextArea, TextField } from "@heroui/react";
+import Select from "react-select";
+import VisitorService from "@/src/services/visitorService";
 
-import { useState } from "react";
-import { ChevronRight } from "lucide-react";
 
 export default function MyProfileDetailsForm() {
-    const [isEditing, setIsEditing] = useState(true); // Start in editing mode
-    const [profileData, setProfileData] = useState({
-        fullName: "",
-        email: "",
-        phone: "",
-        address: ""
-    });
-
-    const handleSave = () => {
-        // Validate required fields
-        if (!profileData.fullName.trim()) {
-            alert("Full Name is required!");
-            return;
-        }
-
-        if (!profileData.email.trim()) {
-            alert("Email is required!");
-            return;
-        }
-
-        if (!profileData.phone.trim()) {
-            alert("Phone is required!");
-            return;
-        }
-
-        if (!profileData.address.trim()) {
-            alert("Address is required!");
-            return;
-        }
-
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(profileData.email)) {
-            alert("Please enter a valid email address!");
-            return;
-        }
-
-        // Validate phone format (basic validation)
-        const phoneRegex = /^\+?[0-9\s\-\(\)]{10,}$/;
-        if (!phoneRegex.test(profileData.phone)) {
-            alert("Please enter a valid phone number!");
-            return;
-        }
-
-        console.log("Profile saved:", profileData);
-        alert("Profile saved successfully!");
-        setIsEditing(false);
-    };
-
-    const handleDeleteAccount = () => {
-        // Check if there's any data to delete
-        const hasData = profileData.fullName || profileData.email || profileData.phone || profileData.address;
-
-        if (!hasData) {
-            alert("No profile data to delete!");
-            return;
-        }
-
-        // Show confirmation dialog
-        const userConfirmed = window.confirm(
-            "Are you sure you want to delete your account? This action cannot be undone."
-        );
-
-        if (userConfirmed) {
-            console.log("Account deleted:", profileData);
-
-            // Clear all profile data
-            setProfileData({
-                fullName: "",
-                email: "",
-                phone: "",
-                address: ""
-            });
-
-            // Switch back to editing mode
-            setIsEditing(true);
-
-            alert("Account deleted successfully!");
-        } else {
-            console.log("Account deletion cancelled");
-        }
-    };
-
-    const handleChange = (field: string, value: string) => {
-        setProfileData(prev => ({
-            ...prev,
-            [field]: value
+    const regex = /^\d*$/;
+    const options = useMemo(() => {
+        return countries.map((country) => ({
+            ...country,
+            label: (
+                <div className="flex items-center gap-2">
+                    <Avatar size="sm">
+                        <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
+                        <AvatarFallback>{country.code}</AvatarFallback>
+                    </Avatar>
+                    {`${country.name} (${country.dial_code})`}
+                </div>
+            ),
+            value: country.dial_code,
         }));
-    };
+    }, []);
 
-    const handleStartEditing = () => {
-        setIsEditing(true);
-    };
 
-    const handleArrowClick = () => {
-        console.log("Green arrow clicked!");
-        alert("Arrow clicked! This would navigate to another page.");
-        // Add your navigation logic here:
-        // window.location.href = "/your-page";
+    const [selectedCountry, setSelectedCountry] = useState<any>(options.find(x => x.code === 'AU'));
+    const [isPhoneFocused, setIsPhoneFocused] = useState(false);
+    const [phoneSubmitError, setPhoneSubmitError] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
+
+    useEffect(() => {
+        const service = new VisitorService();
+        service.getUserProfile().then();
+    }, []);
+
+
+
+    // page handlers
+    const handleCountryChange = (event: any) => {
+        console.log(event);
+        setSelectedCountry(event);
     };
+    const customFilter = (option: CustomOption, searchText: string) => {
+        return (
+            option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            option.data.dial_code.toLowerCase().includes(searchText.toLowerCase())
+        );
+    };
+    const phoneNumberChangeEvent = (event: string) => {
+        if (regex.test(event)) {
+            setPhoneNumber(event);
+        }
+    }
+
+
+
 
     return (
         <div className="flex items-center justify-center bg-white">
-            <div className="w-full">
-                {/* Profile Section */}
+            <Form className="w-full">
                 <div className="mb-6">
                     <div className="flex items-center justify-between mb-2">
                         <h2 className="font-bold text-black">
                             Profile
                         </h2>
-                        {/* Green Arrow Button */}
-                        <button
-                            onClick={handleArrowClick}
-                            
-                        >
-                            <ChevronRight className="text-[#24984e]" size={25} />
-                        </button>
+                        <Button isIconOnly>
+                            <VscChevronRight color="var(--accent)" />
+                        </Button>
                     </div>
                     <div>
                         <p className="text-black text-sm">
@@ -129,140 +77,103 @@ export default function MyProfileDetailsForm() {
                     </div>
                 </div>
 
-                {/* Divider */}
-                <hr className="border-gray-300 mb-3" />
+                <Separator className="mb-3" />
 
-                {/* Full Name */}
+                <div className="mb-3 flex flex-row gap-[16px]">
+                    <TextField className='grow' name="firstName" isRequired>
+                        <Label htmlFor="userFirstName">First Name</Label>
+                        <Input type="text" id="userFirstName" placeholder="First Name" />
+                    </TextField>
+                    <TextField className='grow' name="lastName">
+                        <Label htmlFor="userLastName">Last Name</Label>
+                        <Input type="text" id="userLastName" placeholder="Last Name" />
+                    </TextField>
+
+                </div>
+
                 <div className="mb-3">
-                    <h3 className="font-bold text-black mb-1">
-                        Full Name
-                    </h3>
-                    {isEditing ? (
-                        <input
-                            type="text"
-                            value={profileData.fullName}
-                            onChange={(e) => handleChange("fullName", e.target.value)}
-                            className="w-full px-1 py-1 pl-0 text-black focus:outline-none"
-                            placeholder="Enter full name"
-                        />
-                    ) : (
-                        <div
-                            onClick={handleStartEditing}
-                            className="cursor-pointer hover:bg-gray-50 p-1 rounded"
-                        >
-                            <p className="text-black">
-                                {profileData.fullName || "Click to add full name"}
-                            </p>
-                        </div>
-                    )}
+                    <TextField name="email" isReadOnly>
+                        <Label htmlFor="userEmail">Email</Label>
+                        <Input type="text" id="userEmail" placeholder="Email" />
+                    </TextField>
                 </div>
 
-                {/* Divider */}
-                <hr className="border-gray-300 mb-3" />
 
-                {/* Email */}
                 <div className="mb-3">
-                    <h3 className="font-bold text-black mb-1">
-                        Email
-                    </h3>
-                    {isEditing ? (
-                        <input
-                            type="email"
-                            value={profileData.email}
-                            onChange={(e) => handleChange("email", e.target.value)}
-                            className="w-full px-1 py-1 pl-0 text-black focus:outline-none"
-                            placeholder="Enter email address"
-                        />
-                    ) : (
-                        <div
-                            onClick={handleStartEditing}
-                            className="cursor-pointer hover:bg-gray-50 p-1 rounded"
-                        >
-                            <p className="text-black">
-                                {profileData.email || "Click to add email"}
-                            </p>
-                        </div>
-                    )}
+                    <Select
+                        name="phoneCodeISO"
+                        instanceId={"country_code_login"}
+                        isSearchable
+                        value={selectedCountry}
+                        options={options}
+                        filterOption={customFilter}
+                        placeholder="Select country"
+                        onChange={handleCountryChange}
+                        onFocus={() => setIsPhoneFocused(true)}
+                        onBlur={() => setIsPhoneFocused(false)}
+                        styles={{
+                            control: (provided) => ({
+                                ...provided,
+                                height: "var(--input-container-height)",
+                                borderRadius: "var(--input-border-radius)",
+                                boxShadow: "none",
+                                borderWidth: phoneSubmitError || isPhoneFocused ? 1 : 1,
+                                borderColor: phoneSubmitError
+                                    ? "red"
+                                    : isPhoneFocused
+                                        ? "var(--accent)"
+                                        : "var(--border)",
+                                backgroundColor: "white", // always white background
+                            }),
+                            valueContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
+                            indicatorsContainer: (provided) => ({ ...provided, height: "var(--input-container-height)" }),
+                            placeholder: (provided) => ({
+                                ...provided,
+                                color: "var(--field-placeholder)",
+                            }),
+                            option: (provided, state) => ({
+                                ...provided,
+                                backgroundColor:
+                                    state.isFocused || state.isSelected ? "var(--accent)" : "white",
+                                color: state.isFocused || state.isSelected ? "white" : "black",
+                                cursor: "pointer",
+                            }),
+                        }}
+                    />
                 </div>
 
-                {/* Divider */}
-                <hr className="border-gray-300 mb-3" />
 
-                {/* Phone */}
                 <div className="mb-3">
-                    <h3 className="font-bold text-black mb-1">
-                        Phone
-                    </h3>
-                    {isEditing ? (
-                        <input
-                            type="tel"
-                            value={profileData.phone}
-                            onChange={(e) => handleChange("phone", e.target.value)}
-                            className="w-full px-1 py-1 pl-0 text-black focus:outline-none"
-                            placeholder="Enter phone number"
-                        />
-                    ) : (
-                        <div
-                            onClick={handleStartEditing}
-                            className="cursor-pointer hover:bg-gray-50 p-1 rounded"
-                        >
-                            <p className="text-black">
-                                {profileData.phone || "Click to add phone number"}
-                            </p>
+                    <TextField isRequired fullWidth name="phoneNumber" maxLength={15} value={phoneNumber} onChange={phoneNumberChangeEvent} isReadOnly>
+                        <Label className="font-bold text-base">Phone Number</Label>
+                        <div className="mt-[10px]">
+                            <Input placeholder="Phone Number" type="text" />
                         </div>
-                    )}
+                        <Description>Please enter the phone number without plus sign (+) and country code.</Description>
+                    </TextField>
+                </div>
+                
+
+                <div className="mb-[20px] flex flex-col gap-2">
+                    <Label htmlFor="useraddress">Address</Label>
+                    <TextArea
+                        id="useraddress"
+                        name="address"
+                        aria-label="address"
+                        placeholder="Address"
+                        rows={3}
+                        style={{ resize: "vertical" }}
+                    />
+                </div>
+                
+                <div className="mb-3 flex gap-[16px] flex-row">
+                    <Button className="w-full" variant="danger">Delete Account</Button>
+                    <Button className="w-full">Save</Button>
                 </div>
 
-                {/* Divider */}
-                <hr className="border-gray-300 mb-3" />
 
-                {/* Address */}
-                <div className="mb-3">
-                    <h3 className="font-bold text-black mb-1">
-                        Address
-                    </h3>
-                    {isEditing ? (
-                        <input
-                            type="text"
-                            value={profileData.address}
-                            onChange={(e) => handleChange("address", e.target.value)}
-                            className="w-full px-1 py-1 pl-0 text-black focus:outline-none"
-                            placeholder="Enter address"
-                        />
-                    ) : (
-                        <div
-                            onClick={handleStartEditing}
-                            className="cursor-pointer hover:bg-gray-50 p-1 rounded"
-                        >
-                            <p className="text-black">
-                                {profileData.address || "Click to add address"}
-                            </p>
-                        </div>
-                    )}
-                </div>
+            </Form>
 
-                {/* Divider */}
-                <hr className="border-gray-300 mb-6" />
-
-                {/* Action Buttons - Only Delete and Save */}
-                <div className="flex gap-4">
-                    {/* Delete Account Button */}
-                    <button
-                        onClick={handleDeleteAccount}
-                        className="flex-1 h-[50px] bg-red-600 rounded-[8px] shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center cursor-pointer"
-                    >
-                        <span className="text-white font-medium">Delete Account</span>
-                    </button>
-
-                    {/* Save Button */}
-                    <button
-                        onClick={handleSave}
-                        className="flex-1 h-[50px] bg-[#24984e] rounded-[8px] shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center cursor-pointer"
-                    >
-                        <span className="text-white font-medium">Save</span>
-                    </button>
-                </div>
-            </div>
         </div>
     );
 }
