@@ -1,10 +1,61 @@
 "use client";
 
-import { Card, CardContent, Button } from "@heroui/react";
+import { countries, CustomOption } from "@/src/models/data/countries";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  Card,
+  CardContent,
+  Form,
+  Input,
+  InputGroup,
+  Label,
+  TextArea,
+  TextField,
+} from "@heroui/react";
+import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
+import { useMemo, useState } from "react";
+import Select from "react-select";
 
 export default function ContactUs() {
+  const regex = /^\d*$/;
+
+  const options = useMemo(() => {
+    return countries.map((country) => ({
+      ...country,
+      label: (
+        <div className="flex items-center gap-2">
+          <Avatar size="sm">
+            <AvatarImage src={`https://flagcdn.com/${country.code.toLowerCase()}.svg`} />
+            <AvatarFallback>{country.code}</AvatarFallback>
+          </Avatar>
+          {`${country.name} (${country.dial_code})`}
+        </div>
+      ),
+      value: country.dial_code,
+    }));
+  }, []);
+
+  const [selectedCountry, setSelectedCountry] = useState<any>(
+    options.find(x => x.code === "AU")
+  );
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isPhoneFocused, setIsPhoneFocused] = useState(false);
+
+  const handleCountryChange = (event:any) => setSelectedCountry(event);
+
+  const customFilter = (option: CustomOption, searchText: string) =>
+    option.data.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    option.data.dial_code.toLowerCase().includes(searchText.toLowerCase());
+
+  const handlePhoneChange = (val:string) => {
+    if(regex.test(val)) setPhoneNumber(val);
+  };
+
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
 
       {/* Title */}
       <div className="text-center mb-10">
@@ -16,42 +67,48 @@ export default function ContactUs() {
       </div>
 
       {/* Form Card */}
-      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-sm">
+      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-sm p-0">
+        <CardContent className="p-10">
 
-        <CardContent className="p-10 space-y-6">
+          <Form className="space-y-6">
 
-          {/* Names */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <input
-              placeholder="First Name"
-              className="w-full border border-gray-200 rounded-[5px] px-4 py-3 outline-none focus:border-[#24984e]"
-            />
+            {/* Names */}
+            <div className="grid md:grid-cols-2 gap-6">
 
-            <input
-              placeholder="Last Name"
-              className="w-full border border-gray-200 rounded-[5px] px-4 py-3 outline-none focus:border-[#24984e]"
-            />
-          </div>
+              <TextField>
+                <Label>First Name</Label>
+                <Input placeholder="First Name" />
+              </TextField>
 
-          {/* Email / Phone */}
-          <div className="grid md:grid-cols-1 gap-6">
-            <input
-              placeholder="Email"
-              className="w-full border border-gray-200 rounded-[5px] px-4 py-3 outline-none focus:border-[#24984e]"
-            />
-          </div>
+              <TextField>
+                <Label>Last Name</Label>
+                <Input placeholder="Last Name" />
+              </TextField>
 
-          {/* Message */}
-          <textarea
-            rows={5}
-            placeholder="Write Message..."
-            className="w-full border border-gray-200 rounded-[5px] px-4 py-3 outline-none focus:border-[#24984e] resize-none"
-          />
+            </div>
 
-          {/* Button */}
-          <Button className="bg-[#24984e] text-white w-full rounded-[5px] py-3">
-            Send Message
-          </Button>
+            {/* Email */}
+            <TextField>
+              <Label>Email</Label>
+              <InputGroup fullWidth>
+                <InputGroup.Input placeholder="Email" />
+              </InputGroup>
+            </TextField>
+
+            
+
+            {/* Message */}
+            <TextField>
+              <Label>Message</Label>
+              <TextArea placeholder="Write Message..." rows={4} />
+            </TextField>
+
+            {/* Submit */}
+            <Button className="bg-[#24984e] text-white w-full rounded-[5px] py-3">
+              Send Message
+            </Button>
+
+          </Form>
 
         </CardContent>
       </Card>
@@ -59,9 +116,9 @@ export default function ContactUs() {
       {/* Bottom Info */}
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-6 mt-10">
 
-        <Card className="rounded-xl">
+        <Card>
           <CardContent className="p-5 flex gap-4">
-            <span className="text-[#24984e]">📍</span>
+            <FiMapPin className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Address</p>
               <p className="text-sm text-gray-500">
@@ -71,9 +128,9 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-xl">
+        <Card>
           <CardContent className="p-5 flex gap-4">
-            <span className="text-[#24984e]">📞</span>
+            <FiPhone className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Contact</p>
               <p className="text-sm text-gray-500">470-601-1911</p>
@@ -81,12 +138,14 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-xl">
+        <Card>
           <CardContent className="p-5 flex gap-4">
-            <span className="text-[#24984e]">✉</span>
+            <FiMail className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Email</p>
-              <p className="text-sm text-gray-500">pagedone1234@gmail.com</p>
+              <p className="text-sm text-gray-500">
+                pagedone1234@gmail.com
+              </p>
             </div>
           </CardContent>
         </Card>
