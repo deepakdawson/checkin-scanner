@@ -67,7 +67,7 @@ export default function ContactUs() {
       </div>
 
       {/* Form Card */}
-      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-sm p-0">
+      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-login p-0">
         <CardContent className="p-10">
 
           <Form className="space-y-6">
@@ -116,7 +116,7 @@ export default function ContactUs() {
       {/* Bottom Info */}
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-6 mt-10">
 
-        <Card>
+        <Card className="shadow-login rounded-[20px]">
           <CardContent className="p-5 flex gap-4">
             <FiMapPin className="text-[#24984e]" size={22}/>
             <div>
@@ -128,7 +128,7 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-login rounded-[20px]">
           <CardContent className="p-5 flex gap-4">
             <FiPhone className="text-[#24984e]" size={22}/>
             <div>
@@ -138,7 +138,7 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-login rounded-[20px]">
           <CardContent className="p-5 flex gap-4">
             <FiMail className="text-[#24984e]" size={22}/>
             <div>
