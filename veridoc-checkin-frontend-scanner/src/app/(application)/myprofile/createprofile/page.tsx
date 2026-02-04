@@ -21,8 +21,6 @@ export default function MyProfileDetails() {
             <div className="login-div p-10 w-full rounded-[20px] z-0">
 
               <div>
-
-                {/* Logo */}
                 <Image
                   src="/logo_h_Black.webp"
                   height={100}

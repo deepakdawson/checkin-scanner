@@ -57,7 +57,12 @@
   .input-group__input {
     @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base font-normal;
   }
-
+  .card{
+    @apply rounded-lg shadow-[0_0_0.25em_rgba(67,71,85,0.27),0_0.25em_1em_rgba(90,125,188,0.05)]
+  }
+  .chip {
+    @apply text-[var(--accent)]
+  }
   .input-group[data-focus-within="true"] {
     @apply border-1 border-[var(--accent)];
     box-shadow: none;

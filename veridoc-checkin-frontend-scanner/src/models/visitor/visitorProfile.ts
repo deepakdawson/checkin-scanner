@@ -3,12 +3,20 @@ type VisitorProfileResponse = {
     firstName: string,
     lastName?: string,
     email: string,
-    PhoneISOCode: string,
+    phoneISOCode: string,
     phoneNumber: string,
+    address?: string
+}
+type VisitorProfileUpdateRequest = {
+    visitorId: string,
+    firstName: string,
+    lastName?: string,
     address?: string
 }
 
 
+
 export type {
-    VisitorProfileResponse
+    VisitorProfileResponse,
+    VisitorProfileUpdateRequest
 }
