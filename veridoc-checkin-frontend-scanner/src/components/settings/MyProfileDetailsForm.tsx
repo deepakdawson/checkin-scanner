@@ -95,7 +95,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
     return (
         <>
             { showLoader && <Loader loadingText="Saving" loaderVisible="block" />}
-            <div className="flex items-center justify-center bg-white">
+            <div className="w-full flex items-center justify-center bg-white">
                 <Form className="w-full" onSubmit={onFormSubmit} onInvalid={onFormInvalid}>
                     <div className="mb-6">
                         <div className="flex items-center justify-between mb-2">

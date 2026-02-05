@@ -34,7 +34,7 @@
 
 @layer components {
   .button {
-    @apply rounded-sm bg-accent h-[var(--button-height)] text-base;
+    @apply rounded-sm bg-accent h-[var(--button-height)] xs:text-base text-xs sm:text-base md:text-base lg:text-base xl:text-base 2xl:text-base ;
   }
   .button--icon-only {
     @apply bg-transparent h-auto w-auto rounded-sm
@@ -49,13 +49,13 @@
     @apply bg-[var(--color-danger)]
   }
   .input-group {
-    @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 text-sm border-[var(--border)] px-3 py-2 outline-none rounded-sm;
+    @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl border-[var(--border)] px-3 py-2 outline-none rounded-sm;
   }
   .label{
-    @apply font-bold text-base
+    @apply font-bold text-base text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl
   }
   .input-group__input {
-    @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base font-normal;
+    @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl font-normal;
   }
   .card{
     @apply rounded-lg shadow-[0_0_0.25em_rgba(67,71,85,0.27),0_0.25em_1em_rgba(90,125,188,0.05)]
@@ -91,6 +91,7 @@
 
 @theme {
   --font-family-sans: 'Roboto', sans-serif;
+  --breakpoint-xs: 25rem;
   /* --shadow-md: rgba(100,100,111,0.2) 0px 7px 29px 0px; customize the default shadow-md utility */
 }
 
