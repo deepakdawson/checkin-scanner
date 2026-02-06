@@ -57,10 +57,10 @@ export default function QrScanDetailsConfirm({ params, location, token }: { para
                         <MapPin size={16} className="text-green-600" />
                         {location}
                     </div>
-                    <div className="flex items-center gap-2 break-all">
+                    {/* <div className="flex items-center gap-2 break-all">
                         <QrCode size={16} className="text-green-600" />
                         {params.qrUniqueId}
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mt-4 border-2 border-green-600 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">

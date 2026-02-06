@@ -1,28 +1,28 @@
 import Image from "next/image";
 import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
-
-
+import ScanHistoryComponent from "@/src/components/scanner/ScanHistoryComponent";
 import { Metadata } from "next";
-import ScanHistory from "@/src/components/scanhistory/Scanhistory";
+import VisitorService from "@/src/services/visitorService";
 
 export const metadata: Metadata = {
-  title: "My Profile",
+  title: "Scan History",
 };
 
-export default function MyProfileDetails() {
+export default async function MyProfileDetails() {
+
+  const service = new VisitorService();
+  const response = await service.getScanHistory();
+
+
+
   return (
     <main>
       <div>
         <ErrorAnimation />
-
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center min-h-screen">
-
             <div className="login-div p-10 w-full rounded-[20px] z-0">
-
               <div>
-
-                {/* Logo */}
                 <Image
                   src="/logo_h_Black.webp"
                   height={100}
@@ -30,22 +30,11 @@ export default function MyProfileDetails() {
                   alt=""
                   className="max-w-[300px] mx-auto"
                 />
-
-                {/* Title */}
-                {/* <h1 className="text-[24px] text-center font-semibold mt-6 mb-5 text-green-600">
-                  My Profile
-                </h1> */}
-
-                {/* FORM COMPONENT */}
-                <ScanHistory />
-
+                <ScanHistoryComponent scanHistory={response}/>
               </div>
-
             </div>
-
           </div>
         </div>
-
       </div>
     </main>
   );

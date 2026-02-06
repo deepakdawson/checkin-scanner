@@ -6,6 +6,7 @@
 @import "../components/styles/utilities/autoCompleteUtil.css";
 @import "../components/styles/utilities/textareaUtil.css";
 @import "../components/styles/utilities/inputOtpUtil.css";
+@import "../components/styles/utilities/search-fieldUtils.css";
 @import "../components/styles/sweetAlert.css";
 
 :root {

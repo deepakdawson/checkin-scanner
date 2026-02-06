@@ -1,0 +1,33 @@
+@layer components {
+  .search-field {
+    @apply flex flex-col gap-1;
+  }
+
+  /* When invalid, the description is hidden automatically */
+  .search-field[data-invalid],
+  .search-field[aria-invalid] {
+    [data-slot="description"] {
+      @apply hidden;
+    }
+  }
+
+  .search-field__group {
+    @apply bg-field text-field-foreground rounded-sm h-[var(--input-container-height)] inline-flex items-center overflow-hidden border-1 border-[var(--border)] ;
+  }
+
+  .search-field__input {
+    @apply flex-1 rounded-none border-0 bg-transparent px-3 py-2 shadow-none outline-none xs:text-base sm:text-base md:text-base lg:text-base xl:text-base 2xl:text-base;
+  }
+  .search-field__input[data-focus-within="true"], .search-field__group:focus-within{
+    @apply border-[var(--accent)];
+    box-shadow: none;
+  }
+
+  .search-field__search-icon {
+    @apply text-field-placeholder pointer-events-none shrink-0 ml-3 mr-0 size-4;
+  }
+
+  .search-field__clear-button {
+    @apply mr-1 shrink-0;
+  }
+}

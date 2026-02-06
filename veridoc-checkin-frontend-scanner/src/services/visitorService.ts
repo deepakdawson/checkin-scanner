@@ -7,7 +7,7 @@ import httpClient from "../config/http/httpClient";
 import decodeToken from "../config/helpers/jwtHelper";
 import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
-import type { ScannedQrCodeDetailsResponse, QrCodeDetailsConfirmRequest } from "../models/visitor/scannerModels";
+import type { ScannedQrCodeDetailsResponse, QrCodeDetailsConfirmRequest, PaginatorResponse } from "../models/visitor/scannerModels";
 
 export default class VisitorService {
     async getUserProfile(): Promise<VisitorProfileResponse> {
@@ -104,5 +104,36 @@ export default class VisitorService {
             return Promise.reject(new Error(serverResponse.message));
         }
         return Promise.reject(new Error(AppMessages.Error.serverError));
+    }
+
+    async getScanHistory(): Promise<PaginatorResponse> {
+
+        const session = await getServerSession(authOptions);
+        const serverResponse: ServerCommonResponse = {
+            code: 200,
+            message: '',
+            data: undefined
+        }
+
+        if (session) {
+            const payload = decodeToken(session.user.accessToken);
+            try {
+                const res = await httpClient.get('/visitor/scan-history?userId=' + payload?.nameid, session.user.accessToken);
+                return res.data as PaginatorResponse;
+            }
+            catch (error) {
+                const err = error as AxiosError;
+                if (err.response?.status == 401) {
+                    redirect('/');
+                }
+                serverResponse.code = err.response?.status ?? 400;
+                serverResponse.message = err.response?.statusText;
+                return Promise.reject(serverResponse);
+            }
+        } else {
+            serverResponse.code = 401;
+            serverResponse.message = AppMessages.Error.unauthorized;
+            return Promise.reject(serverResponse);
+        }
     }
 }

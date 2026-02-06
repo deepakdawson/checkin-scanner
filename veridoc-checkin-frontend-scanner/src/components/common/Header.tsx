@@ -130,7 +130,7 @@ export default function AppHeader() {
 							</li>
 							<li className="ml-8">
 								<Link
-									href="/qrlogin"
+									href="/scanner/scan-history"
 									className={
 										path === "/qrlogin"
 											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
