@@ -145,7 +145,7 @@ function LoginForm() {
             <Button type="button" fullWidth onClick={onClickContinueAsGuest}>Continue as a Guest</Button>
             <hr className="border-t border-gray-300" />
             <div className="flex items-center justify-between relative z-20">
-                <h1 className="text-[28px] mt-6 font-semibold">Returning here?</h1>
+                <h1 className="text-[28px] font-semibold">Returning here?</h1>
                 <div className="flex border rounded overflow-hidden bg-white relative z-30">
                     <div
                         onClick={() => setUserLogInType("email")}

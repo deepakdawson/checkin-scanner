@@ -76,7 +76,9 @@
   .input-group:has([data-slot="input-group-prefix"]) .input-group__input {
     @apply pl-[8px]!;
   }
-
+   .avatar{
+    @apply border-r-0
+   }
   .avatar__image {
     @apply object-contain relative
   }
@@ -87,6 +89,9 @@
 
   .modal__header {
     @apply text-center
+  }
+  .modal__dialog {
+    @apply my-auto
   }
 }
 
