@@ -76,7 +76,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
         const requestBody: VisitorProfileUpdateRequest = {
             visitorId: userData.visitorId,
             firstName: firstName,
-            lastName: lastName, 
+            lastName: lastName,
             address: address
         }
 
@@ -86,15 +86,15 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
             setShowLoader(false);
             AppAlert.error(e.message);
         });
-         setShowLoader(false);
-        if(response){
-           AppAlert.success(response.message);
+        setShowLoader(false);
+        if (response) {
+            AppAlert.success(response.message);
         }
     }
 
     return (
         <>
-            { showLoader && <Loader loadingText="Saving" loaderVisible="block" />}
+            {showLoader && <Loader loadingText="Saving" loaderVisible="block" />}
             <div className="w-full flex items-center justify-center bg-white">
                 <Form className="w-full" onSubmit={onFormSubmit} onInvalid={onFormInvalid}>
                     <div className="mb-6">
@@ -115,7 +115,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
 
                     <Separator className="mb-3" />
 
-                    <div className="mb-3 flex flex-row gap-[16px]">
+                    <div className="mb-3 flex md:flex-row xs:flex-col md:gap-[16px] xs:gap-[10px]">
                         <TextField className='grow' name="firstName" isRequired value={firstName} onChange={setFirstName}>
                             <Label htmlFor="userFirstName">First Name</Label>
                             <Input type="text" id="userFirstName" placeholder="First Name" />
@@ -134,8 +134,11 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </TextField>
                     </div>
 
-
+                   
                     <div className="mb-3">
+                        <div className="mb-[8px]">
+                            <Label className="font-bold text-base">Phone Number</Label>
+                        </div>
                         <Select
                             name="phoneCodeISO"
                             instanceId={"country_code_login"}
@@ -182,7 +185,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
 
                     <div className="mb-3">
                         <TextField isRequired fullWidth name="phoneNumber" maxLength={15} minLength={9} value={phoneNumber} onChange={phoneNumberChangeEvent} isReadOnly>
-                            <Label className="font-bold text-base">Phone Number</Label>
+                            {/* <Label className="font-bold text-base">Phone Number</Label> */}
                             <div className="mt-[10px]">
                                 <Input placeholder="Phone Number" type="text" />
                             </div>
@@ -191,7 +194,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                     </div>
 
 
-                    <div className="mb-[20px] flex flex-col gap-2">
+                    <div className="mb-[20px] flex flex-col gap-1">
                         <Label htmlFor="useraddress">Address</Label>
                         <TextArea
                             id="useraddress"

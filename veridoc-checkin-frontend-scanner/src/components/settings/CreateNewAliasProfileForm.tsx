@@ -23,11 +23,11 @@ export default function CreateNewAliasProfileForm() {
 
       <hr className="mb-6" />
 
-      <Card className="rounded-lg border shadow-none">
+      <Card className="rounded-lg">
 
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="">
 
-          <Form className="flex flex-col gap-6">
+          <Form className="flex flex-col md:gap-6 xs:gap-3">
 
             {/* Full Name */}
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
@@ -94,7 +94,7 @@ export default function CreateNewAliasProfileForm() {
               <div className="flex-1">
 
                 {/* Default toggle */}
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     checked={isDefaultAddress}
@@ -123,11 +123,11 @@ export default function CreateNewAliasProfileForm() {
       {/* Buttons */}
       <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
 
-        <Button className="bg-[#24984e] text-white w-full max-w-[200px]">
+        <Button className="bg-[#24984e] text-white w-full sm:max-w-[200px] xs:max-w-full">
           Save
         </Button>
 
-        <Button className="bg-[#24984e] text-white w-full max-w-[200px]">
+        <Button className="bg-[#24984e] text-white w-full sm:max-w-[200px] xs:max-w-full">
           Cancel
         </Button>
 

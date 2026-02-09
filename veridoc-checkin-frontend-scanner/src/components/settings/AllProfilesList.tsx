@@ -49,15 +49,17 @@ export default function AllProfilesList() {
 
       <Separator className="mb-6" />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {profiles.map((profile) => (
           <Card
             key={profile.id}
           >
-            <CardContent className="p-5 space-y-3">
+            <CardContent className="space-y-3">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
+                  <div className="w-[20px]">
                   <FiUser className="text-[var(--accent)]" />
+                  </div>
                   <div className="flex items-center gap-2">
                     <p className="font-semibold">{profile.name}</p>
                     <Chip size="sm" variant="soft">
@@ -68,15 +70,21 @@ export default function AllProfilesList() {
                 <FiEye className="text-gray-400 cursor-pointer" />
               </div>
               <div className="flex items-center gap-3">
-                <FiMail className="text-[var(--accent)]" />
+                <div className="w-[20px]">
+                  <FiMail className="text-[var(--accent)]" />
+                </div>
                 <p>{profile.email}</p>
               </div>
               <div className="flex items-center gap-3">
+                <div className="w-[20px]">
                 <FiPhone className="text-[var(--accent)]" />
+                </div>
                 <p>{profile.phone}</p>
               </div>
               <div className="flex items-center gap-3">
+                <div className="w-[20px]">
                 <FiMapPin className="text-[var(--accent)]" />
+                </div>
                 <p>{profile.address}</p>
               </div>
             </CardContent>

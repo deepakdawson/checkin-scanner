@@ -57,22 +57,27 @@ export default function ScanHistoryComponent({ scanHistory }: { scanHistory: Pag
 
             <Separator className="mb-6" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {scanHistory.items.map((history) => (
                     <Card
                         key={history.visitorId}
                         >
-                        <CardContent className="p-5 space-y-3">
+                        <CardContent className="space-y-3">
                             <p className="text-center font-semibold text-[#24984e]">
                                 Test Org Sayan
                             </p>
                             <div className="flex items-center gap-3 text-sm">
-                                <GoClock className="text-[var(--accent)]" size={25}/>
+                                <div className="w-[20px]">
+                                <GoClock className="text-[var(--accent)]" size={20}/>
+                                </div>
                                 <p>Check In at: {formatDate(history.checkInDate)}</p>
                                 <p>Check Out at: {formatDate(history.checkOutDate)}</p>
                             </div>
                             <div className="flex items-center gap-3 text-sm">
-                                <CiLocationOn className="text-[var(--accent)]" size={25}/>
+                                <div className="w-[20px]">
+                                <CiLocationOn className="text-[var(--accent)]" size={22}/>
+                                </div>
+                                {/* <CiLocationOn className="text-[var(--accent)]" size={25}/> */}
                                 {history.scanLocation}
                             </div>
                             {/* <div className="flex items-center gap-3 text-sm break-all">
@@ -80,7 +85,10 @@ export default function ScanHistoryComponent({ scanHistory }: { scanHistory: Pag
                                 
                             </div> */}
                             <div className="flex items-center gap-3 text-sm">
-                                <FiUsers className="text-[var(--accent)]" size={18}/>
+                                <div className="w-[20px]">
+                                <FiUsers className="text-[var(--accent)]" size={20}/>
+                                </div>
+                                
                                 {history.visitorName}
                             </div>
                         </CardContent>

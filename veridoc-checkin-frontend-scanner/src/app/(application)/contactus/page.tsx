@@ -18,18 +18,11 @@ export default function MyProfileDetails() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center min-h-screen">
 
-            <div className="login-div p-10 w-full rounded-[20px] z-0">
+            <div className="login-div lg:p-[40px] xs:p-[20px] w-full rounded-[20px] z-0">
 
               <div>
 
-                {/* Logo */}
-                <Image
-                  src="/logo_h_Black.webp"
-                  height={100}
-                  width={500}
-                  alt=""
-                  className="max-w-[300px] mx-auto"
-                />
+                
                 <ContactForm />
 
               </div>

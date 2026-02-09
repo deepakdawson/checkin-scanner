@@ -22,17 +22,11 @@ export default async function MyProfilePage() {
                     {/* <ErrorAnimation /> */}
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-center min-h-screen">
-                            <div className="login-div p-[40px] w-[600px] rounded-[20px] bg-white z-0 shadow-login">
+                            <div className="login-div md:w-[600px] xs:w-full xl:p-[40px] xs:p-[20px] rounded-[20px] bg-white z-0 shadow-login">
                                 <div>
                                     {/* Logo */}
-                                    <Image
-                                        src="/logo_h_Black.webp"
-                                        height={100}
-                                        width={500}
-                                        alt=""
-                                        className="max-w-[300px] mx-auto"
-                                    />
-                                    <h1 className="text-[24px] text-center font-semibold mt-6 mb-5 text-green-600">
+                                    
+                                    <h1 className="text-[24px] text-center font-semibold mb-5 text-green-600">
                                         My Profile
                                     </h1>
                                     <MyProfileDetailsForm userData={response} />

@@ -59,21 +59,22 @@ export default function ContactUs() {
 
       {/* Title */}
       <div className="text-center mb-10">
-        <h2 className="text-[32px] font-semibold">Contact Us</h2>
-        <p className="text-gray-500 mt-2">
-          Feel free to contact us? submit your queries here and we will get back
-          to you as soon as possible.
-        </p>
+        
       </div>
 
       {/* Form Card */}
-      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-login p-0">
-        <CardContent className="p-10">
+      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-login">
+        <h2 className="text-[32px] font-semibold text-center text-[#25984e]">Contact Us</h2>
+        <p className="text-[#000] mt-2 text-center mb-5">
+          Feel free to contact us? submit your queries here and we will get back
+          to you as soon as possible.
+        </p>
+        <CardContent className="">
 
-          <Form className="space-y-6">
+          <Form className="space-y-3">
 
             {/* Names */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-3">
 
               <TextField>
                 <Label>First Name</Label>
@@ -104,7 +105,7 @@ export default function ContactUs() {
             </TextField>
 
             {/* Submit */}
-            <Button className="bg-[#24984e] text-white w-full rounded-[5px] py-3">
+            <Button className="bg-[#24984e] text-white w-full rounded-[5px] py-3 mt-[10px]">
               Send Message
             </Button>
 
@@ -117,7 +118,7 @@ export default function ContactUs() {
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-6 mt-10">
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiMapPin className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Address</p>
@@ -129,7 +130,7 @@ export default function ContactUs() {
         </Card>
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiPhone className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Contact</p>
@@ -139,7 +140,7 @@ export default function ContactUs() {
         </Card>
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiMail className="text-[#24984e]" size={22}/>
             <div>
               <p className="font-medium">Email</p>

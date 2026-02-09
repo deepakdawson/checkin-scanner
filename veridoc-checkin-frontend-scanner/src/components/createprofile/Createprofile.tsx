@@ -27,7 +27,7 @@ export default function AddProfileForm() {
 
         <CardContent className="p-4 sm:p-6">
 
-          <Form className="flex flex-col gap-6">
+          <Form className="flex flex-col md:gap-6 xs:gap-3">
 
             {/* Full Name */}
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
