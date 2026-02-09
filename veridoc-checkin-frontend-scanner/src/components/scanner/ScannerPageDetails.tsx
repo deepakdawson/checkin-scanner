@@ -265,14 +265,14 @@ export default function ScannerPageDetails() {
     <>
       <div className="w-full max-w-md relative pt-[30px]">
         {/* Camera Feed with Frame */}
-        <div className="relative w-full h-[338px] rounded-3xl overflow-hidden border-[5px] border-green-600">
+        <div className="relative w-full md:h-[338px] xs:h-auto rounded-3xl overflow-hidden border-[5px] border-green-600">
           {/* Camera Feed */}
           <div id="qr-reader" className="absolute inset-0" />
           {/* Semi-transparent Overlay */}
           <div className="absolute inset-0 bg-black/30" />
           {/* Centered QR Frame */}
-          <div className="absolute inset-0 flex items-center justify-center h-[400px]">
-            <div className="w-54 h-54 border-2 border-white/70 rounded-xl relative bottom-[36px]">
+          <div className="absolute inset-0 flex items-center justify-center sm:h-[400px] xs:h-auto">
+            <div className="w-54 h-54 border-2 border-white/70 rounded-xl relative md:bottom-[36px]">
               <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl" />
               <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-white rounded-tr" />
               <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-white rounded-bl" />
