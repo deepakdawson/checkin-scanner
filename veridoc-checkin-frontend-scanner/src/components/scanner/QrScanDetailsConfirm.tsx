@@ -11,10 +11,7 @@ import { AppAlert } from "../common/AppAlert";
 export default function QrScanDetailsConfirm({ params, location, token }: { params: ScannedQrCodeDetailsResponse, location: string, token: string }) {
 
     const localDate = new Date(params.scannedAt);
-
     const [showLoader, setShowLoader] = useState<boolean>(false);
-
-
     const onClickConfirm = async () => {
         const requestBody: QrCodeDetailsConfirmRequest = {
             visitorId: '',
@@ -29,11 +26,9 @@ export default function QrScanDetailsConfirm({ params, location, token }: { para
         });
         setShowLoader(false);
         if(response) {
-            AppAlert.success(response.message);
+            AppAlert.successRedirect(response.message, '/scanner/scan-history');
         }
     }
-
-
     return (
         <>
             {showLoader && <Loader loadingText="Saving" loaderVisible="block"/>}

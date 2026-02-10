@@ -1,22 +1,21 @@
 "use client";
 
+import AppMessages from "@/src/config/AppMessages";
+import { ContactUsRequest } from "@/src/models/visitor/scannerModels";
+import VisitorService from "@/src/services/visitorService";
 import {
   Button,
   Card,
   CardContent,
   Form,
   Input,
-  InputGroup,
   Label,
   TextArea,
   TextField
 } from "@heroui/react";
+import { FormEvent, useRef, useState } from "react";
 import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 import { AppAlert } from "../common/AppAlert";
-import AppMessages from "@/src/config/AppMessages";
-import { FormEvent, useRef, useState } from "react";
-import { ContactUsRequest } from "@/src/models/visitor/scannerModels";
-import VisitorService from "@/src/services/visitorService";
 import Loader from "../common/Loader";
 
 export default function ContactUs() {

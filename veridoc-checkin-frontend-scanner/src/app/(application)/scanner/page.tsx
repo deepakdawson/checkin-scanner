@@ -17,9 +17,7 @@ export default function ScanQR() {
           alt="Veridoc Checki"
           className="max-w-[300px] mx-auto"
         />
-
         <ScannerPageDetails />
-
       </div>
     </>
   );

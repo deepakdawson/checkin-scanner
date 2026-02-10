@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { toast } from "@heroui/react";
+import { redirect } from "next/navigation";
 export class AppAlert {
     public static error(message?: string) {
         Swal.fire({
@@ -13,6 +14,18 @@ export class AppAlert {
             icon: "success",
             title: "Success",
             html: message,
+        });
+    }
+
+    public static successRedirect(message?: string, url?: string) {
+        Swal.fire({
+            icon: "success",
+            title: "Success",
+            html: message,
+        }).then(() => {
+            if(url){
+                redirect(url);
+            }
         });
     }
 

@@ -108,9 +108,9 @@ export default function AppHeader() {
 						<ul className="tab:hidden flex list-none flex-row mr-auto font-bold text-base">
 							<li>
 								<Link
-									href="/scanner"
+									href={'/scanner'}
 									className={
-										path === "/scanner"
+										path === "/scanner" || '/scanner/qr-details'
 											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
 											: "text-black hover:text-[#24984E]"
 									}>

@@ -38,19 +38,8 @@ export default function ScannerPageDetails() {
     const url = new URL(decodedText);
     const token = url.searchParams.get('token');
 
-    if (token) {
-      var requestOptions = {
-        method: 'GET',
-      };
-
-      fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${userLocation?.lattitude}&lon=${userLocation?.longitude}&apiKey=71078b4e084d4ca7a16d4c0900dd4861`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          const location = result.features[0].properties.formatted;
-          router.push(`/scanner/qr-details?token=${token}&location=${location}`);
-        })
-        .catch(error => console.log('error', error));
-
+    if (token && userLocation?.lattitude && userLocation.longitude) {
+      router.push(`/scanner/qr-details?token=${token}&lat=${userLocation?.lattitude}&lng=${userLocation?.longitude}`);
     }
   };
 
@@ -151,7 +140,6 @@ export default function ScannerPageDetails() {
         setIsLocationError(true);
       }
     );
-
     // Cleanup
     return () => {
       if (qrRef.current && qrRef.current.isScanning) {
