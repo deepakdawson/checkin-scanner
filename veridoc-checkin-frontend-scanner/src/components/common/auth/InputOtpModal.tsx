@@ -13,7 +13,7 @@ interface Props {
     isOpen: boolean,
     setIsOpen: (value: boolean) => void,
     params: OtpModalInputProps,
-    setLoaderVisibility: (arg: string) => void
+    setLoaderVisibility: (arg: boolean) => void
 }
 
 export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisibility }: Props) {
@@ -51,19 +51,19 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
 
     // page handlers
     const resendOtp = async () => {
-        setLoaderVisibility('block');
+        setLoaderVisibility(true);
         const service = new AuthService();
         const data: OtpResendRequestModel = {
             userId: params.visitorId
         }
         setIsOtpResendLoading(true);
         const response = await service.resendOtpForUserAccount(data).catch(error => {
-            setLoaderVisibility('hidden');
+            setLoaderVisibility(false);
             setIsOtpResendLoading(false);
             AppAlert.errorToast(error.message);
         });
         setIsOtpResendLoading(false);
-        setLoaderVisibility('hidden');
+        setLoaderVisibility(false);
         if (response) {
             AppAlert.successToast(response.message ?? '');
             setResendButtonDisabled(true);
@@ -80,18 +80,18 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
             userId: params.visitorId,
             otp: otpValue
         }
-        setLoaderVisibility('block');
+        setLoaderVisibility(true);
         setIsVerifyButtonLoading(true);
         const service = new AuthService()
         const response = await service.verifyOtpForUserAccount(requestBody).catch(error => {
-            setLoaderVisibility('hidden');
+            setLoaderVisibility(false);
             AppAlert.errorToast(error.message);
             setOtpValue('');
             setIsVerifyButtonLoading(false);
             setVerifyButtonDisabled(true);
             setTimeRemaining(100)
         });
-        setLoaderVisibility('hidden');
+        setLoaderVisibility(false);
         if (response) {
             signIn('credentials', {
                 username: params.email,
@@ -107,7 +107,7 @@ export default function InputOtpModal({ isOpen, setIsOpen, params, setLoaderVisi
                     AppAlert.errorToast(AppMessages.Error.serverError);
                 } 
                 if(res?.ok){
-                    router.push('setting/profile');
+                    router.push('/scanner');
                 }
                 
             }).catch(err => {

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -17,24 +16,19 @@ export default function CreateNewAliasProfileForm() {
   return (
     <div className="w-full">
 
-      <h2 className="text-[24px] font-semibold text-[#24984e] mb-3">
+      <h2 className="text-[24px] font-semibold text-[var(--accent)] mb-3">
         Add Profile
       </h2>
 
       <hr className="mb-6" />
 
       <Card className="rounded-lg">
-
         <CardContent className="">
-
           <Form className="flex flex-col md:gap-6 xs:gap-3">
-
-            {/* Full Name */}
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
               <label className="md:w-[250px] font-medium">
                 Full Name <span className="text-red-500">*</span>
               </label>
-
               <div className="flex-1">
                 <TextField fullWidth>
                   <InputGroup fullWidth>

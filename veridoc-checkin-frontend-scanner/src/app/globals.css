@@ -77,8 +77,8 @@
     @apply pl-[8px]!;
   }
    .avatar {
-  @apply rounded-none;
-}
+    @apply rounded-none;
+  }
   .avatar__image {
     @apply object-contain relative border-r-0
   }

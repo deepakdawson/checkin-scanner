@@ -4,7 +4,7 @@ import { userCreateModel } from "@/src/models/auth/userAuthModels";
 import { countries, CustomOption } from "@/src/models/data/countries";
 import AuthService from "@/src/services/authService";
 import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, TextArea, TextField } from "@heroui/react";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useMemo, useRef, useState } from "react";
 import Select from "react-select";
 import { AppAlert } from "../common/AppAlert";
 import Loader from "../common/Loader";
@@ -14,6 +14,7 @@ import InputOtpModal from "../common/auth/InputOtpModal";
 function GuestAccountForm({ token }: { token: string }) {
 
     const regex = /^\d*$/;
+    const emailRef = useRef<HTMLInputElement>(null);
     // counties option
     const options = useMemo(() => {
         return countries.map((country) => ({
@@ -36,8 +37,7 @@ function GuestAccountForm({ token }: { token: string }) {
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [showOtpModal, setShowOtpModal] = useState<boolean>(false);
-    const [loaderVisibility, setLoaderVisibility] = useState<string>('hidden');
-    const [loaderCount, setLoaderCount] = useState<number>(0);
+    const [showLoader, setShowLoader] = useState<boolean>(false);
     const [inputOtpModalParam, setInputOtpModalParam] = useState<OtpModalInputProps>({} as OtpModalInputProps);
 
     // page handlers
@@ -63,23 +63,21 @@ function GuestAccountForm({ token }: { token: string }) {
         const body = data as userCreateModel;
         body.token = token
 
-        setLoaderVisibility('block');
-        setLoaderCount(0);
-
+        setShowLoader(true);
         const service = new AuthService();
         const response = await service.createUserAccount(body).catch(error => {
-            setLoaderVisibility('hidden');
+            setShowLoader(false);
             AppAlert.error(error.message);
         });
-        setLoaderVisibility('hidden');
+        setShowLoader(false);
         if (response) {
             const otpInput: OtpModalInputProps = {
                 phoneNumber: body.phoneNumber,
                 phoneCode: selectedCountry.dial_code,
                 visitorId: response.visitorId,
                 phoneIsoCode: body.phoneCodeISO,
-                email: undefined,
-                isEmailLogin: undefined
+                email: emailRef.current?.value ?? '',
+                isEmailLogin: false
             }
             setInputOtpModalParam(otpInput);
             setShowOtpModal(true);
@@ -97,35 +95,34 @@ function GuestAccountForm({ token }: { token: string }) {
     }
 
     return <>
-        <Loader loaderVisible={loaderVisibility} />
+        { showLoader && <Loader loaderVisible='block' loadingText="Creating" />}
         <Form onSubmit={handleFormSubmit} onInvalid={handleFormSubmitOnInvlaid}>
             {/* FULL NAME INPUT */}
             <div className="mb-[10px]">
-                <TextField isRequired fullWidth name="firstName">
-                    <Label className="font-bold text-base">First Name</Label>
+                <TextField isRequired fullWidth name="firstName" className='mb-[10px]'>
+                    <Label>First Name</Label>
                     <div className="mt-[10px]">
                         <Input placeholder="Full Name" type="text" />
                     </div>
                 </TextField>
                 <TextField fullWidth name="lastName">
-                    <Label className="font-bold text-base">Last Name</Label>
+                    <Label>Last Name</Label>
                     <div className="mt-[10px]">
-                        <Input placeholder="Full Name" type="text" />
+                        <Input placeholder="Last Name" type="text" />
                     </div>
                 </TextField>
             </div>
 
-            {/* FULL NAME INPUT */}
+            {/* email  input */}
             <div className="mb-[20px]">
                 <TextField isRequired fullWidth name="email">
-                    <Label className="font-bold text-base">Email</Label>
+                    <Label>Email</Label>
                     <div className="mt-[10px]">
-                        <Input placeholder="Email" type="email" />
+                        <Input placeholder="Email" type="email" ref={emailRef}/>
                     </div>
                 </TextField>
             </div>
 
-            {/* country list */}
             <div className="mb-[10px]">
                 <Select
                     name="phoneCodeISO"
@@ -169,10 +166,9 @@ function GuestAccountForm({ token }: { token: string }) {
                 />
             </div>
 
-            {/* phone number input*/}
             <div className="mb-[20px]">
                 <TextField isRequired fullWidth name="phoneNumber" value={phoneNumber} onChange={phoneNumberChangeEvent} maxLength={15}>
-                    <Label className="font-bold text-base">Phone Number</Label>
+                    <Label>Phone Number</Label>
                     <div className="mt-[10px]">
                         <Input placeholder="Phone Number" type="text" />
                     </div>
@@ -180,9 +176,8 @@ function GuestAccountForm({ token }: { token: string }) {
                 </TextField>
             </div>
 
-            {/* address input*/}
             <div className="mb-[20px] flex flex-col gap-2">
-                <Label htmlFor="useraddress" className="font-bold text-base">Address</Label>
+                <Label htmlFor="useraddress">Address</Label>
                 <TextArea
                     id="useraddress"
                     name="address"
@@ -193,16 +188,13 @@ function GuestAccountForm({ token }: { token: string }) {
                 />
             </div>
 
-            <Button
-                type="submit"
-                fullWidth
-            >
+            <Button type="submit" fullWidth>
                 Submit and create my profile
             </Button>
         </Form>
 
         {/* otp modal */}
-       <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setLoaderVisibility}/>
+       { showOtpModal && <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setShowLoader}/> }
 
     </>
 }

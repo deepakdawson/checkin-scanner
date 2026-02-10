@@ -1,15 +1,15 @@
 "use client";
-import { countries, CustomOption } from "@/src/models/data/countries";
-import { useEffect, useMemo, useState } from "react";
-import { VscChevronRight } from "react-icons/vsc";
-import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, Separator, TextArea, TextField } from "@heroui/react";
-import Select from "react-select";
-import { VisitorProfileResponse, VisitorProfileUpdateRequest } from "@/src/models/visitor/visitorProfile";
-import { AppAlert } from "../common/AppAlert";
 import AppMessages from "@/src/config/AppMessages";
-import Loader from "../common/Loader";
+import { countries, CustomOption } from "@/src/models/data/countries";
+import { VisitorProfileResponse, VisitorProfileUpdateRequest } from "@/src/models/visitor/visitorProfile";
 import VisitorService from "@/src/services/visitorService";
+import { Avatar, AvatarFallback, AvatarImage, Button, Description, Form, Input, Label, Separator, TextArea, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { VscChevronRight } from "react-icons/vsc";
+import Select from "react-select";
+import { AppAlert } from "../common/AppAlert";
+import Loader from "../common/Loader";
 
 export default function MyProfileDetailsForm({ userData }: { userData: VisitorProfileResponse }) {
     const regex = /^\d*$/;
@@ -137,7 +137,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                    
                     <div className="mb-3">
                         <div className="mb-[8px]">
-                            <Label className="font-bold text-base">Phone Number</Label>
+                            <Label>Phone Number</Label>
                         </div>
                         <Select
                             name="phoneCodeISO"
@@ -185,7 +185,6 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
 
                     <div className="mb-3">
                         <TextField isRequired fullWidth name="phoneNumber" maxLength={15} minLength={9} value={phoneNumber} onChange={phoneNumberChangeEvent} isReadOnly>
-                            {/* <Label className="font-bold text-base">Phone Number</Label> */}
                             <div className="mt-[10px]">
                                 <Input placeholder="Phone Number" type="text" />
                             </div>
@@ -209,8 +208,8 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                     </div>
 
                     <div className="mb-3 flex gap-[16px] flex-row">
-                        <Button className="w-full" variant="danger">Delete Account</Button>
-                        <Button className="w-full" type="submit">Save</Button>
+                        <Button fullWidth variant="danger">Delete Account</Button>
+                        <Button fullWidth type="submit">Save</Button>
                     </div>
                 </Form>
             </div>

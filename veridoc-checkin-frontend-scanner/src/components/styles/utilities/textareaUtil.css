@@ -1,6 +1,6 @@
 @layer components {
   .textarea {
-    @apply rounded-sm border-1 border-[var(--border)] bg-surface px-4 py-3 text-base font-normal leading-6 text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl;
+    @apply rounded-sm border-1 border-[var(--border)] bg-surface px-4 py-3 xs:text-sm font-normal md:text-sm lg:text-base xl:text-base 2xl:text-base;
 
     &:hover,
     &[data-hovered="true"] {

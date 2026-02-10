@@ -1,8 +1,6 @@
-import Image from "next/image";
-import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
 import AppHeader from "@/src/components/common/Header";
-import { Metadata } from "next";
 import ContactForm from "@/src/components/contactus/Contactus";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact Us",

@@ -59,7 +59,7 @@ export default function ContactUs() {
           Feel free to contact us? submit your queries here and we will get back
           to you as soon as possible.
         </p>
-        <CardContent className="">
+        <CardContent>
           <Form className="space-y-6" onSubmit={handleOnSubmit} onInvalid={handleOnSubmitError} ref={formRef}>
             <div className="grid md:grid-cols-2 gap-6">
               <TextField isRequired name="firstName">
@@ -90,7 +90,7 @@ export default function ContactUs() {
 
         <Card className="shadow-login rounded-[20px]">
           <CardContent className="flex gap-4">
-            <FiMapPin className="text-[#24984e]" size={22} />
+            <FiMapPin className="text-[var(--accent)]" size={22} />
             <div>
               <p className="font-medium">Address</p>
               <p className="text-sm text-gray-500">
@@ -102,7 +102,7 @@ export default function ContactUs() {
 
         <Card className="shadow-login rounded-[20px]">
           <CardContent className="flex gap-4">
-            <FiPhone className="text-[#24984e]" size={22} />
+            <FiPhone className="text-[var(--accent)]" size={22} />
             <div>
               <p className="font-medium">Contact</p>
               <p className="text-sm text-gray-500">470-601-1911</p>
@@ -112,7 +112,7 @@ export default function ContactUs() {
 
         <Card className="shadow-login rounded-[20px]">
           <CardContent className="flex gap-4">
-            <FiMail className="text-[#24984e]" size={22} />
+            <FiMail className="text-[var(--accent)]" size={22} />
             <div>
               <p className="font-medium">Email</p>
               <p className="text-sm text-gray-500">
@@ -121,7 +121,6 @@ export default function ContactUs() {
             </div>
           </CardContent>
         </Card>
-
       </div>
     </>
   );

@@ -1,19 +1,15 @@
-import Image from "next/image";
-import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
-import { Metadata } from "next";
+import AppHeader from "@/src/components/common/Header";
 import MyProfileDetailsForm from "@/src/components/settings/MyProfileDetailsForm";
 import VisitorService from "@/src/services/visitorService";
-import AppHeader from "@/src/components/common/Header";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "My Profile",
 };
 
 export default async function MyProfilePage() {
-
     const service = new VisitorService();
     const response = await service.getUserProfile();
-
     return (
         <>
         <AppHeader />
@@ -24,8 +20,6 @@ export default async function MyProfilePage() {
                         <div className="flex items-center justify-center min-h-screen">
                             <div className="login-div md:w-[600px] xs:w-full xl:p-[40px] xs:p-[20px] rounded-[20px] bg-white z-0 shadow-login">
                                 <div>
-                                    {/* Logo */}
-                                    
                                     <h1 className="text-[24px] text-center font-semibold mb-5 text-green-600">
                                         My Profile
                                     </h1>

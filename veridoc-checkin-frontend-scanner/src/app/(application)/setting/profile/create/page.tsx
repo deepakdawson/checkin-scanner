@@ -1,7 +1,6 @@
-import Image from "next/image";
 import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
-import { Metadata } from "next";
 import CreateNewAliasProfileForm from "@/src/components/settings/CreateNewAliasProfileForm";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "My Profile",
@@ -16,7 +15,6 @@ export default function MyProfileDetails() {
                     <div className="flex items-center min-h-screen">
                         <div className="login-div lg:p-[40px] xs:p-[20px] w-full rounded-[20px] z-0">
                             <div>
-                                
                                 <CreateNewAliasProfileForm />
                             </div>
                         </div>
