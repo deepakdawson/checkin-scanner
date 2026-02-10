@@ -53,7 +53,7 @@ export default function ContactUs() {
   return (
     <>
       {showLoader && <Loader loaderVisible="block" loadingText="Sending" />}
-      <Card className="max-w-[1000px] mx-auto rounded-2xl shadow-login">
+      <Card className="max-w-[1000px] mx-auto rounded-[8px] shadow-login">
         <h2 className="text-[32px] font-semibold text-center text-[#25984e]">Contact Us</h2>
         <p className="text-[#000] mt-2 text-center mb-5">
           Feel free to contact us? submit your queries here and we will get back
@@ -88,7 +88,7 @@ export default function ContactUs() {
 
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-6 mt-10">
 
-        <Card className="shadow-login rounded-[20px]">
+        <Card className="shadow-login  rounded-[8px]">
           <CardContent className="flex gap-4">
             <FiMapPin className="text-[var(--accent)]" size={22} />
             <div>
@@ -100,7 +100,7 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-login rounded-[20px]">
+        <Card className="shadow-login  rounded-[8px]">
           <CardContent className="flex gap-4">
             <FiPhone className="text-[var(--accent)]" size={22} />
             <div>
@@ -110,7 +110,7 @@ export default function ContactUs() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-login rounded-[20px]">
+        <Card className="shadow-login  rounded-[8px]">
           <CardContent className="flex gap-4">
             <FiMail className="text-[var(--accent)]" size={22} />
             <div>
