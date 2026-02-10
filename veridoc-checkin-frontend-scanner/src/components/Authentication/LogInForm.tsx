@@ -1,16 +1,15 @@
 'use client'
-import { countries, CustomOption } from "@/src/models/data/countries";
-import { Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, InputOTP, Modal, TextField, useFilter } from "@heroui/react";
-import { FormEvent, useMemo, useState } from "react";
-import Select from "react-select";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import AuthService from "@/src/services/authService";
-import Loader from "../common/Loader";
-import { AppAlert } from "../common/AppAlert";
 import AppMessages from "@/src/config/AppMessages";
 import type { OtpGenerateRequestModel, OtpModalInputProps } from "@/src/models/auth/userAuthModels";
+import { countries, CustomOption } from "@/src/models/data/countries";
+import AuthService from "@/src/services/authService";
+import { Avatar, AvatarFallback, AvatarImage, Button, Form, Input, InputGroup, TextField } from "@heroui/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useMemo, useState } from "react";
+import Select from "react-select";
+import { AppAlert } from "../common/AppAlert";
 import InputOtpModal from "../common/auth/InputOtpModal";
+import Loader from "../common/Loader";
 
 function LoginForm() {
 
@@ -41,7 +40,7 @@ function LoginForm() {
     const [showOtpModal, setShowOtpModal] = useState<boolean>(false);
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const [phoneSubmitError, setPhoneSubmitError] = useState(false);
-    const [showLoader, setShowLoader] = useState<string>('hidden');
+    const [showLoader, setShowLoader] = useState<boolean>(false);
     const [inputOtpModalParam, setInputOtpModalParam] = useState<OtpModalInputProps>({} as OtpModalInputProps);
 
 
@@ -84,13 +83,13 @@ function LoginForm() {
                     phoneNumber: '',
                     isEmailLogin: true
                 }
-                setShowLoader('block');
+                setShowLoader(true);
                 const service = new AuthService();
                 const response = await service.generateOtpForUserAccount(requestBody).catch(err => {
-                    setShowLoader('hidden');
+                    setShowLoader(false);
                     AppAlert.error(err.message);
                 });
-                setShowLoader('hidden');
+                setShowLoader(false);
                 if (response) {
                     const otpInput: OtpModalInputProps = {
                         phoneNumber: userPhoneNumber,
@@ -112,13 +111,13 @@ function LoginForm() {
                     phoneNumber: userPhoneNumber,
                     isEmailLogin: false
                 }
-                setShowLoader('block');
+                setShowLoader(true);
                 const service = new AuthService();
                 const response = await service.generateOtpForUserAccount(requestBody).catch(err => {
-                    setShowLoader('hidden');
+                    setShowLoader(false);
                     AppAlert.error(err.message);
                 });
-                setShowLoader('hidden');
+                setShowLoader(false);
                 if (response) {
                     const otpInput: OtpModalInputProps = {
                         phoneNumber: userPhoneNumber,
@@ -135,12 +134,9 @@ function LoginForm() {
         }
     }
 
-
-
-
     return <>
         {/* user login form */}
-        <Loader loaderVisible={showLoader} loadingText="Loading" />
+        { showLoader && <Loader loaderVisible='block' loadingText="Loading" /> }
         <Form className="w-full flex flex-col gap-6 mb-2 relative" onSubmit={handleContinueButtonClick} onInvalid={onSubmitError}>
             <Button type="button" fullWidth onClick={onClickContinueAsGuest}>Continue as a Guest</Button>
             <hr className="border-t border-gray-300" />
@@ -232,7 +228,7 @@ function LoginForm() {
             <Button type="submit" variant="primary" fullWidth>Continue</Button>
         </Form>
 
-        <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setShowLoader} />
+        {showOtpModal && <InputOtpModal isOpen={showOtpModal} setIsOpen={setShowOtpModal} params={inputOtpModalParam} setLoaderVisibility={setShowLoader} />}
     </>
 }
 

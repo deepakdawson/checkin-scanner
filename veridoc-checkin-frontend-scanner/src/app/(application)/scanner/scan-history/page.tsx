@@ -1,12 +1,10 @@
-import Image from "next/image";
-import ErrorAnimation from "@/src/components/animations/ErrorAnimation";
-import ScanHistoryComponent from "@/src/components/scanner/ScanHistoryComponent";
-import { Metadata } from "next";
-import VisitorService from "@/src/services/visitorService";
-import decodeToken from "@/src/config/helpers/jwtHelper";
-import { getServerSession } from "next-auth";
 import authOptions from "@/src/app/api/auth/[...nextauth]/options";
 import AppHeader from "@/src/components/common/Header";
+import ScanHistoryComponent from "@/src/components/scanner/ScanHistoryComponent";
+import {decodeToken} from "@/src/config/helpers/jwtHelper";
+import VisitorService from "@/src/services/visitorService";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Scan History",

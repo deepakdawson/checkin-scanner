@@ -21,7 +21,8 @@ type ScannerHistoryResponse ={
     checkInDate: string,
     checkOutDate: string,
     ip: string,
-    scanLocation: string
+    scanLocation: string,
+    organizationName: string
 }
 
 type PaginatorResponse = {

@@ -50,13 +50,13 @@
     @apply bg-[var(--color-danger)]
   }
   .input-group {
-    @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl border-[var(--border)] px-3 py-2 outline-none rounded-sm;
+    @apply bg-field text-field-foreground inline-flex h-[var(--input-container-height)] items-center overflow-hidden border-1 border-[var(--border)] px-3 py-2 outline-none rounded-sm xs:text-sm font-normal md:text-sm lg:text-base xl:text-base 2xl:text-base;
   }
   .label{
     @apply font-bold text-base mb-[5px];
   }
   .input-group__input {
-    @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none text-base text-sm text-xs text-lg text-xl text-2xl text-3xl text-4xl font-normal;
+    @apply flex-1 rounded-none border-0 bg-transparent shadow-none outline-none font-normal xs:text-sm font-normal md:text-sm lg:text-base xl:text-base 2xl:text-base;
   }
   .card{
     @apply xl:p-[40px] xs:p-[20px] rounded-lg shadow-[0_0_0.25em_rgba(67,71,85,0.27),0_0.25em_1em_rgba(90,125,188,0.05)]

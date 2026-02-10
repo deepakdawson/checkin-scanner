@@ -94,7 +94,7 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
                     >
                         <CardContent className="space-y-3">
                             <p className="text-center font-semibold text-[#24984e]">
-                                Test Org
+                                {history.organizationName}
                             </p>
                             <div className="flex items-center gap-3 text-sm">
                                 <div className="w-[20px]">

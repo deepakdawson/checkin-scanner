@@ -1,17 +1,19 @@
 "use client";
-import { Avatar, Separator, } from "@heroui/react";
+import { useDecodeToken } from "@/src/config/helpers/jwtHelper";
+import { Button, Separator } from "@heroui/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { FaChevronDown, FaHome, FaSignOutAlt } from "react-icons/fa";
-import { FaSheetPlastic, FaUserGear, FaUsers } from "react-icons/fa6";
-import { MdOutlineQrCode, MdSettings } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { FaChevronDown, FaSignOutAlt } from "react-icons/fa";
+import { MdHistory, MdOutlineQrCodeScanner } from "react-icons/md";
 import { VscSignOut } from "react-icons/vsc";
 
 export default function AppHeader() {
-
+	const { data, status } = useSession();
 	const [toggle, setToggle] = useState(false);
 	const [open, setOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -32,7 +34,6 @@ export default function AppHeader() {
 				setToggle(false);
 			}
 		};
-
 		document.addEventListener("click", handleClick);
 		return () => {
 			document.removeEventListener("click", handleClick);
@@ -42,16 +43,9 @@ export default function AppHeader() {
 	const path = usePathname();
 
 	const handleLogout = () => {
+		signOut();
 		router.push("/");
 	};
-
-	const Menu = [
-		{
-			name: "Settings",
-			path: "/setting/profile",
-		},
-		{ name: "Sign Out", path: "/login", onClick: handleLogout },
-	];
 
 	return (
 		<header>
@@ -90,7 +84,6 @@ export default function AppHeader() {
 								/>
 							</a>
 						</div>
-
 						{toggle ? (
 							<AiOutlineClose
 								onClick={() => setToggle(!toggle)}
@@ -102,18 +95,16 @@ export default function AppHeader() {
 								className="text-[#9c9c9c] text-2xl md:block lg:hidden"
 							/>
 						)}
-						<span className="left-14 absolute text-black text-[18px] font-bold hidden mob:block tab:block">
-							
-						</span>
 						<ul className="xs:hidden lg:flex flex list-none flex-row mr-auto font-bold text-base ">
 							<li>
 								<Link
 									href={'/scanner'}
 									className={
-										path === "/scanner" || '/scanner/qr-details'
-											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
-											: "text-black hover:text-[#24984E]"
-									}>
+										path === "/scanner" || path === '/scanner/qr-details'
+											? "border-b-3 border-[var(--accent)] text-[var(--accent)] pb-[42px]"
+											: "text-black hover:text-[var(--accent)]"
+									}
+								>
 									Scan QR Code
 								</Link>
 							</li>
@@ -122,8 +113,8 @@ export default function AppHeader() {
 									href="/setting/profile"
 									className={
 										path === "/setting/profile"
-											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
-											: "text-black hover:text-[#24984E]"
+											? "border-b-3 border-[var(--accent)] text-[var(--accent)] pb-[42px]"
+											: "text-black hover:text-[var(--accent)]"
 									}>
 									My Profile
 								</Link>
@@ -132,9 +123,9 @@ export default function AppHeader() {
 								<Link
 									href="/scanner/scan-history"
 									className={
-										path === "/qrlogin"
-											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
-											: "text-black hover:text-[#24984E]"
+										path === "/scanner/scan-history"
+											? "border-b-3 border-[var(--accent)] text-[var(--accent)] pb-[42px]"
+											: "text-black hover:text-[var(--accent)]"
 									}>
 									Scan History
 								</Link>
@@ -143,8 +134,8 @@ export default function AppHeader() {
 								<a
 									className={
 										path === "/contact-us"
-											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
-											: "text-black hover:text-[#24984E]"
+											? "border-b-3 border-[var(--accent)] text-[var(--accent)] pb-[42px]"
+											: "text-black hover:text-[var(--accent)]"
 									}
 									href="/contact-us">
 									Contact Us
@@ -160,47 +151,32 @@ export default function AppHeader() {
 										<button
 											onClick={() => handleDropdown(open)}
 											type="button"
-											className="link w-fit p-[5px] flex items-center gap-3">
-											<span className="font-bold">
-												Deepak
+											className="link no-underline w-fit p-[5px] flex items-center gap-3">
+											<span className="font-bold text-base">
+												{useDecodeToken(data?.user.accessToken)?.unique_name}
 											</span>
 											<span className="ms-[8px]">
-												<FaChevronDown 	className={`left-[52px] top-[5px] text-lg ${open ? "rotate-180" : "" }`}
-												/>
+												<FaChevronDown className={`left-[52px] top-[5px] text-lg ${open ? "rotate-180" : ""}`} />
 											</span>
 										</button>
 										{open && (
 											<div className={`bg-white  w-[232px] shadow-lg absolute right-[0px] top-14 animate-[growDown_300ms_ease-in-out_forwards] origin-top z-[999]`}>
 												<ul className="border-[1px] border-[solid] border-[#e5e5e6]">
 													<div className="flex flex-col items-center p-7">
-														<span className="font-bold pt-5">Deepak</span>
-														{/* <span className="pt-1">{userEmail}</span> */}
-														<span className="pt-1 text-[12px]">
-															deepak@adf.com
-														</span>
+														<span className="font-bold pt-5">{useDecodeToken(data?.user.accessToken)?.unique_name}</span>
+														<span className="pt-1 text-[12px]">{useDecodeToken(data?.user.accessToken)?.email}</span>
 													</div>
 													<Separator />
-													{Menu.map((menu) => (
-														<li
-															className=" cursor-pointer px-3 py-[12px] border-b-[1px] border-[#e5e5e6] p-[5px] drpdown"
-															key={menu.name}>
-															{menu.onClick ? (
-																<button
-																	onClick={menu.onClick}
-																	className="flex items-center gap-2">
-																	<FaSignOutAlt className="text-[#666] text-lg" />
-																	{menu.name}
-																</button>
-															) : (
-																<a
-																	href={menu.path}
-																	className="flex items-center gap-2">
-																	<MdSettings className="text-[#666] text-lg" />
-																	{menu.name}
-																</a>
-															)}
-														</li>
-													))}
+													<li
+														className="cursor-pointer px-3 py-[12px] border-b-[1px] border-[#e5e5e6] p-[5px] drpdown"
+														key={1}>
+														<Button
+															onClick={handleLogout}
+															className="bg-transparent">
+															<FaSignOutAlt className="text-red-500 text-lg" />
+															<span className="text-black">Logout</span>
+														</Button>
+													</li>
 												</ul>
 											</div>
 										)}
@@ -218,9 +194,8 @@ export default function AppHeader() {
 							<div className="flex justify-between border-b-[1px] border-[#ccc] pb-[20px] mob:gap-2">
 								<div className="">
 									<div className="text-[#ccc] text-[16px] mob:pt-[20px]">Welcome,</div>
-									<span className="font-bold">deepak</span>
+									<span className="font-bold">{useDecodeToken(data?.user.accessToken)?.unique_name}</span>
 								</div>
-
 								<AiOutlineClose
 									onClick={() => setToggle(!toggle)}
 									className="text-[#9c9c9c] text-2xl md:block lg:hidden"
@@ -230,75 +205,43 @@ export default function AppHeader() {
 								<li className="py-3 text-[#777777] text-[15px]">
 									<a
 										className={
-											path === "/dashboard" ||
-												path === "/masteradmin/master-admin-dashboard"
-												? "flex items-center text-[#24984E]"
-												: "flex items-center hover:text-[#24984E]"
-										}
-										href="/dashboard">
-										<span className="me-[15px] text-[18px]">
-											<FaHome />
-										</span>
-										Dashboard
-									</a>
-								</li>
-								<li className="py-3 text-[#777777] text-[15px]">
-									<a
-										className={
-											path === "/timesheet-overview"
-												? "flex items-center text-[#24984E]"
-												: "flex items-center hover:text-[#24984E]"
-										}
-										href={"/timesheet-overview"}>
-										<span className="me-[15px] text-[18px]">
-											<FaSheetPlastic />
-										</span>
-										Timesheets
-									</a>
-								</li>
-								<li className="py-3 text-[#777777] text-[15px]">
-									<a
-										className={
-											path === "/setting/profile" ||
-												path === "/masteradmin/master-admin-myaccount"
-												? "flex items-center text-[#24984E]"
-												: "flex items-center hover:text-[#24984E]"
+											path === "/scanner" || path === '/scanner/qr-details'
+												? "flex items-center text-[var(--accent)]"
+												: "flex items-center hover:text-[var(--accent)]"
 										}
 										href="/setting/profile">
 										<span className="me-[15px] text-[18px]">
-											<FaUserGear />
+											<MdOutlineQrCodeScanner />
 										</span>
-										Settings
+										Scan QR Code
 									</a>
 								</li>
 								<li className="py-3 text-[#777777] text-[15px]">
 									<a
 										className={
-											path === "/qrlogin" ||
-												path === "/qrlogin"
-												? "flex items-center text-[#24984E]"
-												: "flex items-center hover:text-[#24984E]"
+											path === "/setting/profile"
+												? "flex items-center text-[var(--accent)]"
+												: "flex items-center hover:text-[var(--accent)]"
 										}
 										href="/qrlogin">
 										<span className="me-[15px] text-[18px]">
-											<MdOutlineQrCode />
+											<CgProfile />
 										</span>
-										Generate QR Code
+										Profile
 									</a>
 								</li>
 								<li className="py-3 text-[#777777] text-[15px]">
 									<a
 										className={
-											path === "/integrations" ||
-												path === "/integrations"
-												? "flex items-center text-[#24984E]"
-												: "flex items-center hover:text-[#24984E]"
+											path === '/scanner/scan-history'
+												? "flex items-center text-[var(--accent)]"
+												: "flex items-center hover:text-[var(--accent)]"
 										}
-										href="/integrations">
+										href="/scanner/scan-history">
 										<span className="me-[15px] text-[18px]">
-											<FaUserGear />
+											<MdHistory />
 										</span>
-										Integrations
+										Scan History
 									</a>
 								</li>
 							</ul>
@@ -308,7 +251,7 @@ export default function AppHeader() {
 										className="flex items-center"
 										onClick={handleLogout}
 										href="#">
-										<VscSignOut className="text-[#24984E] me-[15px] text-[18px]" />
+										<VscSignOut className="text-[var(--accent)] me-[15px] text-[18px]" />
 										<span className="text-[#777777] text-[15px] font-semibold">
 											Sign Out
 										</span>

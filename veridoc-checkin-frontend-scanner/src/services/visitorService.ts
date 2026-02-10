@@ -4,7 +4,7 @@ import type { VisitorProfileUpdateRequest, VisitorProfileResponse } from "../mod
 import { getServerSession } from "next-auth";
 import authOptions from "../app/api/auth/[...nextauth]/options";
 import httpClient from "../config/http/httpClient";
-import decodeToken from "../config/helpers/jwtHelper";
+import { decodeToken } from "../config/helpers/jwtHelper";
 import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
 import type { ScannedQrCodeDetailsResponse, QrCodeDetailsConfirmRequest, PaginatorResponse, ContactUsRequest } from "../models/visitor/scannerModels";

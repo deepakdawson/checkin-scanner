@@ -9,4 +9,14 @@ function decodeToken(accessToken?: string): JwtPayload | undefined {
     }
 }
 
-export default decodeToken;
+function useDecodeToken(token?: string){
+    if(token){
+        const payload = jwt.decode(token);
+        return payload as JwtPayload;
+    }
+}
+
+export {
+    decodeToken,
+    useDecodeToken
+};
