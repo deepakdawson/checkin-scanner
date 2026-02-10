@@ -101,7 +101,7 @@
   /* --shadow-md: rgba(100,100,111,0.2) 0px 7px 29px 0px; customize the default shadow-md utility */
 }
 .container{
-    @apply max-w-[100%] px-[35px] xs:px-[16px];
+    @apply max-w-[100%] lg:px-[35px] xs:px-[16px];
   }
 body {
   font-family: 'Roboto', sans-serif

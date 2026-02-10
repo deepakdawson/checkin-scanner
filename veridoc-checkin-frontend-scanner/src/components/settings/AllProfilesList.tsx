@@ -37,11 +37,12 @@ export default function AllProfilesList() {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-[22px] font-semibold text-[#24984e]">
+      <div className="flex md:flex-row xs:flex-col justify-between items-center mb-4">
+        <h2 className="text-[32px] font-semibold text-[#24984e] xs:mb-3">
           Current Profiles
         </h2>
-        <Button onClick={onCreateButtonClick}>
+        <Button onClick={onCreateButtonClick}
+        className="xs:w-full md:w-auto">
           <FiPlus size={18} />
           Create Profile
         </Button>

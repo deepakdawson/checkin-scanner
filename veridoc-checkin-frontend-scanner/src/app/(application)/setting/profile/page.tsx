@@ -18,7 +18,7 @@ export default async function MyProfilePage() {
                     {/* <ErrorAnimation /> */}
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-center min-h-screen">
-                            <div className="login-div md:w-[600px] xs:w-full xl:p-[40px] xs:p-[20px] rounded-[20px] bg-white z-0 shadow-login">
+                            <div className="login-div mt-[50px] mb-[50px] md:w-[600px] xs:w-full xl:p-[40px] xs:p-[20px] rounded-[20px] bg-white z-0 shadow-login">
                                 <div>
                                     <h1 className="text-[24px] text-center font-semibold mb-5 text-green-600">
                                         My Profile

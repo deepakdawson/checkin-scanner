@@ -14,7 +14,7 @@ export default function MyProfileDetails() {
         <AppHeader />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center min-h-screen">
-            <div className="login-div lg:p-[40px] xs:p-[20px] w-full rounded-[20px] z-0">
+            <div className="login-div mt-[50px] mb-[50px] w-full rounded-[20px] z-0">
               <div>
                 <ContactForm />
               </div>

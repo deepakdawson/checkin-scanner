@@ -63,7 +63,7 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
     return (
         <div className="w-full">
             <div className="flex flex-col md:flex-row xs:flex-col justify-between items-start sm:items-center mb-4 gap-3">
-                <h2 className="text-[22px] font-semibold text-[var(--accent)] md:w-auto xs:w-full md:text-left">
+                <h2 className="text-[32px] font-semibold text-[var(--accent)] md:w-auto xs:w-full md:text-left xs:text-center">
                     Scan History
                 </h2>
                 <div className="flex gap-3 md:flex-row xs:flex-col md:w-auto xs:w-full">

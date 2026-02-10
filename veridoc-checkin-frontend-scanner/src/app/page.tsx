@@ -15,7 +15,7 @@ export default function LoginPage() {
         <ErrorAnimation />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-screen">
-            <div className="login-div md:p-[40px] xs:p-[20px] md:w-[600] xs:w-full rounded-[20px] bg-white z-0 shadow-login">
+            <div className="login-div mt-[50px] mb-[50px] md:p-[40px] xs:p-[20px] md:w-[600] xs:w-full rounded-[20px] bg-white z-0 shadow-login">
               <div className="login-form">
                 <div className="login-title">
                   <Image

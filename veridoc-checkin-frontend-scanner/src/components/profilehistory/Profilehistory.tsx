@@ -28,7 +28,7 @@ export default function ProfilehistoryForm() {
 
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-[22px] font-semibold text-[#24984e]">
+        <h2 className="text-[32px] font-semibold text-[#24984e]">
           Current Profiles
         </h2>
 

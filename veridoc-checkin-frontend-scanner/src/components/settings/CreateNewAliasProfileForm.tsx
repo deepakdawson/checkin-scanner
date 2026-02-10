@@ -16,8 +16,8 @@ export default function CreateNewAliasProfileForm() {
   return (
     <div className="w-full">
 
-      <h2 className="text-[24px] font-semibold text-[var(--accent)] mb-3">
-        Add Profile
+      <h2 className="text-[32px] font-semibold text-[var(--accent)] md:w-auto xs:w-full md:text-left xs:text-center mb-3">
+        Add Profilee
       </h2>
 
       <hr className="mb-6" />
