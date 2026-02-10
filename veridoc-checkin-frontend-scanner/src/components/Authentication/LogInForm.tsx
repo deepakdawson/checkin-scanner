@@ -144,8 +144,8 @@ function LoginForm() {
         <Form className="w-full flex flex-col gap-6 mb-2 relative" onSubmit={handleContinueButtonClick} onInvalid={onSubmitError}>
             <Button type="button" fullWidth onClick={onClickContinueAsGuest}>Continue as a Guest</Button>
             <hr className="border-t border-gray-300" />
-            <div className="flex items-center justify-between relative z-20">
-                <h1 className="text-[28px] font-semibold">Returning here?</h1>
+            <div className="flex items-center justify-between relative z-20 md:flex-row xs:flex-col">
+                <h1 className="text-[28px] font-semibold md:mb-0 xs:mb-3">Returning here?</h1>
                 <div className="flex border rounded overflow-hidden bg-white relative z-30">
                     <div
                         onClick={() => setUserLogInType("email")}
@@ -181,7 +181,7 @@ function LoginForm() {
             )}
 
             {userLoginType === 'phone' && (
-                <div className="grid grid-cols-2 gap-4">
+               <div className="grid grid-cols-2 gap-4 xs:flex xs:flex-col md:grid">
                     <Select
                         instanceId={"country_code_login"}
                         isSearchable

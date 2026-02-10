@@ -23,7 +23,7 @@ import { AppAlert } from "../common/AppAlert";
 
 export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { scanHistory: PaginatorResponse, apiUrl?: string, userId?: string }) {
 
-    const {data,status} = useSession();
+    const { data, status } = useSession();
 
     const formatDate = (value: string) => {
         const date = new Date(value);
@@ -38,21 +38,21 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
     }
 
     const onClickExportToCsv = async () => {
-        if(status == 'authenticated'){
+        if (status == 'authenticated') {
             const service = new VisitorService();
             const response = await service.exportCsvFile(apiUrl ?? '', data.user.accessToken, userId).catch(e => {
                 AppAlert.error(e.message);
             });
 
-            if(response) {
-                const d = new Blob([response], { type: 'text/csv'});
+            if (response) {
+                const d = new Blob([response], { type: 'text/csv' });
                 const url = window.URL.createObjectURL(d);
                 const link = document.createElement('a');
                 link.href = url;
                 link.setAttribute('download', `scan_history_${Date.now()}.csv`);
                 document.body.appendChild(link);
                 link.click();
-                
+
                 link.parentNode?.removeChild(link);
                 window.URL.revokeObjectURL(url);
             }
@@ -60,23 +60,26 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
     }
 
 
-    return ( 
+    return (
         <div className="w-full">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-                <h2 className="text-[22px] font-semibold text-[var(--accent)]">
+            <div className="flex flex-col md:flex-row xs:flex-col justify-between items-start sm:items-center mb-4 gap-3">
+                <h2 className="text-[22px] font-semibold text-[var(--accent)] md:w-auto xs:w-full md:text-left">
                     Scan History
                 </h2>
-                <div className="flex gap-3">
+                <div className="flex gap-3 md:flex-row xs:flex-col md:w-auto xs:w-full">
                     <div className="relative">
-                        <SearchField aria-label="search bar" aria-describedby="search bar">
+                        <SearchField aria-label="search bar" aria-describedby="search bar" className="xs:w-full">
                             <SearchField.Group>
                                 <SearchField.SearchIcon />
-                                <SearchField.Input placeholder="Search"/>
+                                <SearchField.Input placeholder="Search" />
                                 <SearchField.ClearButton />
                             </SearchField.Group>
                         </SearchField>
                     </div>
-                    <Button onClick={onClickExportToCsv}>
+                    <Button
+                        onClick={onClickExportToCsv}
+                        className="xs:w-full md:w-auto"
+                    >
                         <BsFiletypeSvg /> Export As CSV
                     </Button>
                 </div>
@@ -88,21 +91,21 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
                 {scanHistory.items.map((history) => (
                     <Card
                         key={history.visitorId}
-                        >
+                    >
                         <CardContent className="space-y-3">
                             <p className="text-center font-semibold text-[#24984e]">
-                                Test Org Sayan
+                                Test Org
                             </p>
                             <div className="flex items-center gap-3 text-sm">
                                 <div className="w-[20px]">
-                                <GoClock className="text-[var(--accent)]" size={20}/>
+                                    <GoClock className="text-[var(--accent)]" size={20} />
                                 </div>
                                 <p>Check In at: {formatDate(history.checkInDate)}</p>
                                 <p>Check Out at: {formatDate(history.checkOutDate)}</p>
                             </div>
                             <div className="flex items-center gap-3 text-sm">
                                 <div className="w-[20px]">
-                                <CiLocationOn className="text-[var(--accent)]" size={22}/>
+                                    <CiLocationOn className="text-[var(--accent)]" size={22} />
                                 </div>
                                 {/* <CiLocationOn className="text-[var(--accent)]" size={25}/> */}
                                 {history.scanLocation}
@@ -113,9 +116,9 @@ export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { 
                             </div> */}
                             <div className="flex items-center gap-3 text-sm">
                                 <div className="w-[20px]">
-                                <FiUsers className="text-[var(--accent)]" size={20}/>
+                                    <FiUsers className="text-[var(--accent)]" size={20} />
                                 </div>
-                                
+
                                 {history.visitorName}
                             </div>
                         </CardContent>

@@ -60,7 +60,7 @@ export default function ContactUs() {
           Feel free to contact us? submit your queries here and we will get back
           to you as soon as possible.
         </p>
-        <CardContent className="p-10">
+        <CardContent className="">
           <Form className="space-y-6" onSubmit={handleOnSubmit} onInvalid={handleOnSubmitError} ref={formRef}>
             <div className="grid md:grid-cols-2 gap-6">
               <TextField isRequired name="firstName">
@@ -90,7 +90,7 @@ export default function ContactUs() {
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-6 mt-10">
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiMapPin className="text-[#24984e]" size={22} />
             <div>
               <p className="font-medium">Address</p>
@@ -102,7 +102,7 @@ export default function ContactUs() {
         </Card>
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiPhone className="text-[#24984e]" size={22} />
             <div>
               <p className="font-medium">Contact</p>
@@ -112,7 +112,7 @@ export default function ContactUs() {
         </Card>
 
         <Card className="shadow-login rounded-[20px]">
-          <CardContent className="p-5 flex gap-4">
+          <CardContent className="flex gap-4">
             <FiMail className="text-[#24984e]" size={22} />
             <div>
               <p className="font-medium">Email</p>

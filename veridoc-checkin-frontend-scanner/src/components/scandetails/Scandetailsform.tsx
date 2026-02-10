@@ -9,7 +9,7 @@ export default function ConfirmScanForm() {
     <div className="mt-6">
 
       <p className="text-center font-medium">
-        asdasdas123 (Test Org Sayan)
+        asdasdas123 (Test Org)
       </p>
 
       <div className="mt-6 space-y-4 text-sm text-gray-600">

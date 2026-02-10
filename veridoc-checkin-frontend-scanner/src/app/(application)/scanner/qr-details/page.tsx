@@ -43,7 +43,7 @@ export default async function QrScanDetailsPage({ searchParams }: { searchParams
                   </h1>
                   {/* FORM COMPONENT */}
                   <QrScanDetailsConfirm params={response} location={location} token={token} />
-                </div>
+                </div>  
               </div>
             </div>
           </div>

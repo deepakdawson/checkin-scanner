@@ -76,15 +76,15 @@
   .input-group:has([data-slot="input-group-prefix"]) .input-group__input {
     @apply pl-[8px]!;
   }
-   .avatar{
-    @apply border-r-0
-   }
+   .avatar {
+  @apply rounded-none;
+}
   .avatar__image {
-    @apply object-contain relative
+    @apply object-contain relative border-r-0
   }
 
   .avatar--sm {
-    @apply bg-transparent
+    @apply bg-transparent 
   }
 
   .modal__header {

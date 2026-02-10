@@ -61,7 +61,7 @@ export default function ProfilehistoryForm() {
 
               {/* Org */}
               <p className="text-center font-semibold text-[#24984e]">
-                Test Org Sayan
+                Test Org
               </p>
 
               {/* Time */}
