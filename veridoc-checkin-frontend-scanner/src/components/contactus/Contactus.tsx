@@ -60,7 +60,7 @@ export default function ContactUs() {
           to you as soon as possible.
         </p>
         <CardContent>
-          <Form className="space-y-6" onSubmit={handleOnSubmit} onInvalid={handleOnSubmitError} ref={formRef}>
+          <Form className="space-y-3" onSubmit={handleOnSubmit} onInvalid={handleOnSubmitError} ref={formRef}>
             <div className="grid md:grid-cols-2 gap-6">
               <TextField isRequired name="firstName">
                 <Label>First Name</Label>
