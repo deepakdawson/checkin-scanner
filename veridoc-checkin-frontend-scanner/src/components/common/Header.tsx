@@ -94,18 +94,18 @@ export default function AppHeader() {
 						{toggle ? (
 							<AiOutlineClose
 								onClick={() => setToggle(!toggle)}
-								className="text-[#9c9c9c] text-2xl md:hidden tab:block"
+								className="text-[#9c9c9c] text-2xl md:block lg:hidden"
 							/>
 						) : (
 							<AiOutlineMenu
 								onClick={() => setToggle(!toggle)}
-								className="text-[#9c9c9c] text-2xl md:hidden tab:block"
+								className="text-[#9c9c9c] text-2xl md:block lg:hidden"
 							/>
 						)}
 						<span className="left-14 absolute text-black text-[18px] font-bold hidden mob:block tab:block">
 							
 						</span>
-						<ul className="tab:hidden flex list-none flex-row mr-auto font-bold text-base">
+						<ul className="xs:hidden lg:flex flex list-none flex-row mr-auto font-bold text-base ">
 							<li>
 								<Link
 									href={'/scanner'}
@@ -151,7 +151,7 @@ export default function AppHeader() {
 								</a>
 							</li>
 						</ul>
-						<div className="flex items-center flex-shrink-0 tab:hidden">
+						<div className="flex items-center flex-shrink-0 xs:hidden lg:flex">
 							<div
 								className="top-bar-right top-bar-right-account"
 								ref={dropdownRef}>
@@ -223,7 +223,7 @@ export default function AppHeader() {
 
 								<AiOutlineClose
 									onClick={() => setToggle(!toggle)}
-									className="text-[#9c9c9c] text-2xl md:hidden tab:block"
+									className="text-[#9c9c9c] text-2xl md:block lg:hidden"
 								/>
 							</div>
 							<ul className="pt-[20px] border-[#ccc] pb-[15px]">
