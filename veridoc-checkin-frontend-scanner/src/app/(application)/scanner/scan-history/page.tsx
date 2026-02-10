@@ -1,10 +1,10 @@
 import authOptions from "@/src/app/api/auth/[...nextauth]/options";
 import AppHeader from "@/src/components/common/Header";
 import ScanHistoryComponent from "@/src/components/scanner/ScanHistoryComponent";
-import {decodeToken} from "@/src/config/helpers/jwtHelper";
 import VisitorService from "@/src/services/visitorService";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Scan History",
@@ -16,22 +16,22 @@ export default async function MyProfileDetails() {
 
   const service = new VisitorService();
   const response = await service.getScanHistory();
-  const payload = decodeToken(session?.user.accessToken);
   return (
-    <main>
-      <div>
-        {/* <ErrorAnimation /> */}
-        <AppHeader />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center min-h-screen">
-            <div className="login-div mt-[50px] mb-[50px] w-full rounded-[20px] z-0">
-              <div>
-                <ScanHistoryComponent scanHistory={response}/>
+    <Suspense>
+      <main>
+        <div>
+          <AppHeader />
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center min-h-screen">
+              <div className="login-div mt-[50px] mb-[50px] w-full rounded-[20px] z-0">
+                <div>
+                  <ScanHistoryComponent scanHistory={response} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </Suspense>
   );
 }

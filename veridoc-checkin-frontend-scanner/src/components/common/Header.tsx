@@ -172,7 +172,7 @@ export default function AppHeader() {
 														key={1}>
 														<Button
 															onClick={handleLogout}
-															className="bg-transparent">
+															className="bg-transparent h-[30px]">
 															<FaSignOutAlt className="text-red-500 text-lg" />
 															<span className="text-black">Logout</span>
 														</Button>
