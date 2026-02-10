@@ -14,12 +14,17 @@ import {
     FiUsers
 } from "react-icons/fi";
 import { GoClock } from "react-icons/go";
-
+import { useSession } from "next-auth/react";
 import type { PaginatorResponse } from "@/src/models/visitor/scannerModels";
+import VisitorService from "@/src/services/visitorService";
+import { AppAlert } from "../common/AppAlert";
 
 
 
-export default function ScanHistoryComponent({ scanHistory }: { scanHistory: PaginatorResponse }) {
+export default function ScanHistoryComponent({ scanHistory, apiUrl, userId }: { scanHistory: PaginatorResponse, apiUrl?: string, userId?: string }) {
+
+    const {data,status} = useSession();
+
     const formatDate = (value: string) => {
         const date = new Date(value);
         return date.toLocaleString('hi-IN', {
@@ -32,24 +37,46 @@ export default function ScanHistoryComponent({ scanHistory }: { scanHistory: Pag
         });
     }
 
-    return (
+    const onClickExportToCsv = async () => {
+        if(status == 'authenticated'){
+            const service = new VisitorService();
+            const response = await service.exportCsvFile(apiUrl ?? '', data.user.accessToken, userId).catch(e => {
+                AppAlert.error(e.message);
+            });
+
+            if(response) {
+                const d = new Blob([response], { type: 'text/csv'});
+                const url = window.URL.createObjectURL(d);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `scan_history_${Date.now()}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                
+                link.parentNode?.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            }
+        }
+    }
+
+
+    return ( 
         <div className="w-full">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
                 <h2 className="text-[22px] font-semibold text-[var(--accent)]">
                     Scan History
                 </h2>
-
                 <div className="flex gap-3">
                     <div className="relative">
                         <SearchField aria-label="search bar" aria-describedby="search bar">
                             <SearchField.Group>
                                 <SearchField.SearchIcon />
-                                <SearchField.Input />
+                                <SearchField.Input placeholder="Search"/>
                                 <SearchField.ClearButton />
                             </SearchField.Group>
                         </SearchField>
                     </div>
-                    <Button >
+                    <Button onClick={onClickExportToCsv}>
                         <BsFiletypeSvg /> Export As CSV
                     </Button>
                 </div>

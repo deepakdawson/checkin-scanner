@@ -7,7 +7,7 @@ import httpClient from "../config/http/httpClient";
 import decodeToken from "../config/helpers/jwtHelper";
 import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
-import type { ScannedQrCodeDetailsResponse, QrCodeDetailsConfirmRequest, PaginatorResponse } from "../models/visitor/scannerModels";
+import type { ScannedQrCodeDetailsResponse, QrCodeDetailsConfirmRequest, PaginatorResponse, ContactUsRequest } from "../models/visitor/scannerModels";
 
 export default class VisitorService {
     async getUserProfile(): Promise<VisitorProfileResponse> {
@@ -58,7 +58,7 @@ export default class VisitorService {
         return Promise.reject(new Error(AppMessages.Error.serverError));
     }
 
-    async getScannedQrDetails(token: string): Promise<ScannedQrCodeDetailsResponse>{
+    async getScannedQrDetails(token: string): Promise<ScannedQrCodeDetailsResponse> {
         const session = await getServerSession(authOptions);
         const serverResponse: ServerCommonResponse = {
             code: 200,
@@ -135,5 +135,33 @@ export default class VisitorService {
             serverResponse.message = AppMessages.Error.unauthorized;
             return Promise.reject(serverResponse);
         }
+    }
+
+    async exportCsvFile(url: string, token: string, userId?: string): Promise<any> {
+        try {
+            const res = await httpClient.get(url + '/visitor/scan-history/export?userId=' + userId, token);
+            return res.data;
+        }
+        catch (error) {
+            const e = error as AxiosError;
+            return Promise.reject(e.response?.data);
+        }
+    }
+
+    async sendContactUsRequest(data: ContactUsRequest): Promise<ServerCommonResponse> {
+        const response = await fetch('/api/contact-us', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            return await response.json();
+        }
+        const errorResponse = await response.json();
+        const serverResponse = errorResponse as ServerCommonResponse;
+
+        if ('code' in serverResponse) {
+            return Promise.reject(new Error(serverResponse.message));
+        }
+        return Promise.reject(new Error(AppMessages.Error.serverError));
     }
 }

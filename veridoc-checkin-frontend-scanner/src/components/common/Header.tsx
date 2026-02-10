@@ -142,11 +142,11 @@ export default function AppHeader() {
 							<li className="ml-8">
 								<a
 									className={
-										path === "/contactus"
+										path === "/contact-us"
 											? "border-b-3 border-[#24984E] text-[#24984E] pb-[42px]"
 											: "text-black hover:text-[#24984E]"
 									}
-									href="/contactus">
+									href="/contact-us">
 									Contact Us
 								</a>
 							</li>

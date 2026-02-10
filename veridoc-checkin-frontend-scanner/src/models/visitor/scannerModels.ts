@@ -33,8 +33,17 @@ type PaginatorResponse = {
     items: ScannerHistoryResponse[]
 }
 
+type ContactUsRequest = {
+    firstName: string,
+    lastName?: string,
+    email: string,
+    message: string
+    userId: string
+}
+
 export type {
     ScannedQrCodeDetailsResponse,
     QrCodeDetailsConfirmRequest,
-    PaginatorResponse
+    PaginatorResponse,
+    ContactUsRequest
 }
