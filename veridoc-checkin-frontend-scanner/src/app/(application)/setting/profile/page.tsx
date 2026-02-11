@@ -18,12 +18,13 @@ export default async function MyProfilePage() {
                 <main>
                     <div>
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="flex items-center justify-center min-h-screen">
-                                <div className="login-div mt-[50px] mb-[50px] md:w-[600px] xs:w-full xl:p-[40px] xs:p-[20px] rounded-[20px] bg-white z-0 shadow-login">
+                            <div className="flex items-center justify-center">
+                                <div className="login-div mt-[50px] mb-[50px] xs:w-full rounded-[20px] ">
                                     <div>
-                                        <h1 className="text-[24px] text-center font-semibold mb-5 text-green-600">
+                                        <h1 className="text-[32px] md:text-left xs:text-center font-semibold mb-5 text-green-600">
                                             My Profile
                                         </h1>
+                                        <hr className="mb-6"></hr>
                                         <MyProfileDetailsForm userData={response} />
                                     </div>
                                 </div>
