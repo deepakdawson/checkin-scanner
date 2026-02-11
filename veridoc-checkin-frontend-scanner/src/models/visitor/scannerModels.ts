@@ -28,9 +28,9 @@ type ScannerHistoryResponse ={
 type PaginatorResponse = {
     pageNumber: number,
     pageSize: number,
-    pageCount: string,
-    hasPreviousPage: string,
-    hasNextPage: string,
+    pageCount: number,
+    hasPreviousPage: boolean,
+    hasNextPage: boolean,
     items: ScannerHistoryResponse[]
 }
 
@@ -46,5 +46,6 @@ export type {
     ScannedQrCodeDetailsResponse,
     QrCodeDetailsConfirmRequest,
     PaginatorResponse,
-    ContactUsRequest
+    ContactUsRequest,
+    ScannerHistoryResponse
 }

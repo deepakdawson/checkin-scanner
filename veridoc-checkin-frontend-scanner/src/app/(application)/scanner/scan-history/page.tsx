@@ -1,4 +1,5 @@
 import authOptions from "@/src/app/api/auth/[...nextauth]/options";
+import AppFooter from "@/src/components/common/Footer";
 import AppHeader from "@/src/components/common/Header";
 import ScanHistoryComponent from "@/src/components/scanner/ScanHistoryComponent";
 import VisitorService from "@/src/services/visitorService";
@@ -10,12 +11,12 @@ export const metadata: Metadata = {
   title: "Scan History",
 };
 
-export default async function MyProfileDetails() {
+export default async function MyProfileDetails({searchParams}: {searchParams: Promise<{[key:string]: string|undefined}>}) {
 
-  const session = await getServerSession(authOptions);
+  const pageNumber = (await searchParams).page;
 
   const service = new VisitorService();
-  const response = await service.getScanHistory();
+  const response = await service.getScanHistory(pageNumber);
   return (
     <Suspense>
       <main>
@@ -30,6 +31,7 @@ export default async function MyProfileDetails() {
               </div>
             </div>
           </div>
+          <AppFooter/>
         </div>
       </main>
     </Suspense>

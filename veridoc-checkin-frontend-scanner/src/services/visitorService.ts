@@ -106,7 +106,7 @@ export default class VisitorService {
         return Promise.reject(new Error(AppMessages.Error.serverError));
     }
 
-    async getScanHistory(): Promise<PaginatorResponse> {
+    async getScanHistory(page?:string): Promise<PaginatorResponse> {
 
         const session = await getServerSession(authOptions);
         const serverResponse: ServerCommonResponse = {
@@ -118,7 +118,7 @@ export default class VisitorService {
         if (session) {
             const payload = decodeToken(session.user.accessToken);
             try {
-                const res = await httpClient.get('/visitor/scan-history?userId=' + payload?.nameid, session.user.accessToken);
+                const res = await httpClient.get('/visitor/scan-history?userId=' + payload?.nameid + '&page=' + (page || 0), session.user.accessToken);
                 return res.data as PaginatorResponse;
             }
             catch (error) {

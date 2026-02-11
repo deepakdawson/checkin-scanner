@@ -1,3 +1,4 @@
+import AppFooter from "@/src/components/common/Footer";
 import AppHeader from "@/src/components/common/Header";
 import MyProfileDetailsForm from "@/src/components/settings/MyProfileDetailsForm";
 import VisitorService from "@/src/services/visitorService";
@@ -33,6 +34,7 @@ export default async function MyProfilePage() {
                     </div>
                 </main>
             </Suspense>
+            <AppFooter/>
         </>
     );
 }

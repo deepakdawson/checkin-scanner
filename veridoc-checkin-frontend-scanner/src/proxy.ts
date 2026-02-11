@@ -26,6 +26,8 @@ export async function proxy(request: NextRequest) {
 export const config = {
     matcher: [
         '/setting/:path*', // match all nested setting routes,
-        '/'
+        '/',
+        '/scanner/:path*',
+        '/contact-us',
     ]
 }
