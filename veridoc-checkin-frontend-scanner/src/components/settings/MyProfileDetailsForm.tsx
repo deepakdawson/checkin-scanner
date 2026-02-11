@@ -334,13 +334,13 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                     <Separator className="mb-3" />
 
                     {/* Reorganized layout with labels on left */}
-                    <div className="space-y-6">
+                    <div className=" md:space-y-6 xs:space-y-3">
                         {/* Full Name Row */}
-                        <div className="flex items-start gap-6">
-                            <div className="w-1/4 pt-2">
+                        <div className="flex items-start md:gap-6 xs:gap-3">
+                            <div className="w-1/4 pt-2 xs:hidden md:block">
                                 <Label className="text-black font-medium">Full Name</Label>
                             </div>
-                            <div className="w-3/4">
+                            <div className="md:w-3/4 xs:w-full">
                                 <div className="flex md:flex-row xs:flex-col md:gap-[16px] xs:gap-[10px]">
                                     <TextField className='grow' name="firstName" isRequired value={firstName} onChange={setFirstName}>
                                         <Label htmlFor="userFirstName" className=" md:hidden">First Name</Label>
@@ -355,11 +355,11 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </div>
 
                         {/* Email Row */}
-                        <div className="flex items-start gap-6">
-                            <div className="w-1/4 pt-2">
+                        <div className="flex items-start md:gap-6 xs:gap-3">
+                            <div className="w-1/4 pt-2 xs:hidden md:block">
                                 <Label className="text-black font-medium">Email</Label>
                             </div>
-                            <div className="w-3/4">
+                            <div className="md:w-3/4 xs:w-full">
                                 <TextField name="email" isReadOnly value={email}>
                                     <Label htmlFor="userEmail" className=" md:hidden">Email</Label>
                                     <Input type="text" id="userEmail" placeholder="Email" />
@@ -368,11 +368,11 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </div>
 
                         {/* Phone Row */}
-                        <div className="flex items-start gap-6">
-                            <div className="w-1/4 pt-2">
+                        <div className="flex items-start md:gap-6 xs:gap-3">
+                            <div className="w-1/4 pt-2 xs:hidden md:block">
                                 <Label className="text-black font-medium">Phone Number</Label>
                             </div>
-                            <div className="w-3/4">
+                            <div className="md:w-3/4 xs:w-full">
                                 <div className="mb-3">
                                     <div className="mb-[8px]  className= md:hidden">
                                         <Label className="">Phone Number</Label>
@@ -431,11 +431,11 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </div>
 
                         {/* Address Row - Same two-column layout */}
-                        <div className="flex items-start gap-6 mb-[20px]">
-                            <div className="w-1/4 pt-2">
+                        <div className="flex items-start md:gap-6 xs:gap-3 mb-[20px]">
+                            <div className="w-1/4 pt-2 xs:hidden md:block">
                                 <Label className="text-black font-medium">Address</Label>
                             </div>
-                            <div className="w-3/4">
+                            <div className="md:w-3/4 xs:w-full">
                                 <TextArea
                                     id="useraddress"
                                     name="address"
@@ -457,7 +457,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                     </div> */}
                 </Form>
             </Card>
-            <div className="mb-3 mt-6 flex gap-[16px] flex-row justify-between">
+            <div className="mb-3 mt-6 flex gap-[16px] md:flex-row xs:flex-col justify-between">
                 <Button fullWidth variant="danger" className="sm:max-w-[200px]">Delete Account</Button>
                 <Button fullWidth type="submit" className="sm:max-w-[200px]">Save</Button>
             </div>
