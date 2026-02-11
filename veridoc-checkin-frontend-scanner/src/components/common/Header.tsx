@@ -65,7 +65,7 @@ export default function AppHeader() {
 			<nav className="bg-[#f8f9fb] px-0 py-[20px] border-b-[#ededed] border-b border-solid;">
 				<div className="container mx-auto">
 					<nav className="flex items-center justify-between flex-wrap relative">
-						<div className="flex items-center flex-shrink-0 text-white mr-6 tab:hidden">
+						<div className="flex items-center flex-shrink-0 text-white md:mr-8 xs:mr-6 tab:hidden">
 							<a
 								className="inline-block py-[0.3125rem] lg:mr-auto"
 								href="/dashboard">

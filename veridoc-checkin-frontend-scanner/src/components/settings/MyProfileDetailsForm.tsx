@@ -431,7 +431,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </div>
 
                         {/* Address Row - Same two-column layout */}
-                        <div className="flex items-start md:gap-6 xs:gap-3 mb-[20px]">
+                        <div className="flex items-start md:gap-6 xs:gap-3">
                             <div className="w-1/4 pt-2 xs:hidden md:block">
                                 <Label className="text-black font-medium">Address</Label>
                             </div>

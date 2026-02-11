@@ -19,7 +19,7 @@ export default async function MyProfilePage() {
                 <main>
                     <div>
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="flex items-center justify-center">
+                            <div className="flex justify-center min-h-screen">
                                 <div className="login-div mt-[50px] mb-[50px] xs:w-full rounded-[20px] ">
                                     <div>
                                         <h1 className="text-[32px] md:text-left xs:text-center font-semibold mb-5 text-green-600">
