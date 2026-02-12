@@ -17,13 +17,6 @@ export default function ScanQR() {
       <AppHeader />
       <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
         {/* <ErrorAnimation /> */}
-        <Image
-          src='/logo_h_Black.webp'
-          height={100}
-          width={500}
-          alt="Veridoc Checki"
-          className="max-w-[300px] mx-auto"
-        />
         <ScannerPageDetails />
       </div>
       <AppFooter/>

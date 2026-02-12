@@ -251,7 +251,7 @@ export default function ScannerPageDetails() {
 
   return (
     <>
-      <div className="w-full max-w-md relative pt-[30px]">
+      <div className="w-full max-w-md relative">
         {/* Camera Feed with Frame */}
         <div className="relative w-full md:h-[338px] xs:h-auto rounded-3xl overflow-hidden border-[5px] border-green-600">
           {/* Camera Feed */}
