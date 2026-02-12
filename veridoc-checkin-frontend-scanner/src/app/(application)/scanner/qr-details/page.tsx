@@ -41,13 +41,6 @@ export default async function QrScanDetailsPage({ searchParams }: { searchParams
             <div className="flex items-center justify-center min-h-screen">
               <div className="login-div mt-[50px] mb-[50px] p-[40px] w-[600px] rounded-[20px] bg-white z-0 shadow-login">
                 <div>
-                  <Image
-                    src="/logo_h_Black.webp"
-                    height={100}
-                    width={500}
-                    alt=""
-                    className="max-w-[300px] mx-auto"
-                  />
                   <h1 className="text-[24px] text-center font-semibold mt-6 text-green-600">
                     Confirm Scan Details
                   </h1>
