@@ -68,7 +68,12 @@
     @apply border-1 border-[var(--accent)];
     box-shadow: none;
   }
-
+   .input{
+    @apply shadow-none
+   }
+   .textarea{
+    @apply shadow-none
+   }
   .input-group__prefix {
     @apply w-[var(--input-prefix-image-width)] h-[var(--input-prefix-image-height)] object-contain relative
   }
