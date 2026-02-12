@@ -331,7 +331,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                         </div>
                     </div>
 
-                    <Separator className="mb-3" />
+                    <Separator className="mb-6" />
 
                     {/* Reorganized layout with labels on left */}
                     <div className=" md:space-y-6 xs:space-y-3">
@@ -373,7 +373,7 @@ export default function MyProfileDetailsForm({ userData }: { userData: VisitorPr
                                 <Label className="text-black font-medium">Phone Number</Label>
                             </div>
                             <div className="md:w-3/4 xs:w-full">
-                                <div className="mb-3">
+                                <div className="mb-6">
                                     <div className="mb-[8px]  className= md:hidden">
                                         <Label className="">Phone Number</Label>
                                     </div>
